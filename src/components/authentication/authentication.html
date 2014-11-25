@@ -1,0 +1,20 @@
+<form data-abide>
+    <label>Email
+      <input type="email" placeholder="whodunit@nowhere.com" required ng-model="username">
+    </label>
+    <label>Password
+      <input type="password" placeholder="idunno24" ng-model="password">
+    </label>
+    <div ng-if="sign_up == true">
+      <p>Great!  Let us know what you'd like to call you, and we'll
+      sort the rest out later!</p>
+      <label>Name
+        <input type="text" ng-model="name">
+      </label>
+      <button type="submit" class="button expand" ng-click="sign_up()">Sign Up</button>
+    </div>
+    <div ng-if="sign_up == false">
+      <button type="submit" class="button expand" ng-click="log_in()">You know what to do.</button>
+      <button class="button secondary expand" ng-click="show_sign_up()">I'd like to sign up!</button>
+    </div>
+</form>
