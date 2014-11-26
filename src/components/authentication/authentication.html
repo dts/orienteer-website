@@ -1,19 +1,28 @@
-<form data-abide>
+<form>
     <label>Email
-      <input type="email" placeholder="whodunit@nowhere.com" required ng-model="username">
+      <input ng-class="data_errors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
     </label>
+    <small class="error" ng-if="data_errors.username">{{ data_errors.username }}</small>
     <label>Password
-      <input type="password" placeholder="idunno24" ng-model="password">
+      <input ng-class="data_errors.password?'error':''" type="password" placeholder="idunno24" ng-model="data.password">
     </label>
-    <div ng-if="sign_up == true">
+    <small class="error" ng-if="data_errors.password">{{ data_errors.password }}</small>
+    <div ng-if="signing_up" class="fade">
       <p>Great!  Let us know what you'd like to call you, and we'll
       sort the rest out later!</p>
-      <label>Name
-        <input type="text" ng-model="name">
+      <label>First Name
+        <input ng-class="data_errors.fname?'error':''" type="text" ng-model="data.fname">
       </label>
+      <small class="error" ng-if="data_errors.fname">{{ data_errors.fname }}</small>
+      <label>Last Name
+        <input  ng-class="data_errors.lname?'error':''" type="text" ng-model="data.lname">
+      <small class="error" ng-if="data_errors.lname">{{ data_errors.lname }}</small>
+      </label>
+      {{ status }}
       <button type="submit" class="button expand" ng-click="sign_up()">Sign Up</button>
     </div>
-    <div ng-if="sign_up == false">
+    <div ng-if="!signing_up">
+      {{ status }}
       <button type="submit" class="button expand" ng-click="log_in()">You know what to do.</button>
       <button class="button secondary expand" ng-click="show_sign_up()">I'd like to sign up!</button>
     </div>

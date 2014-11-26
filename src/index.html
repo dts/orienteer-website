@@ -56,17 +56,27 @@
     <script src="../bower_components/foundation/js/foundation.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="lib/jquery.iframe-transport.js"></script>
+    <script src="lib/jquery.ui.widget.js"></script>
+    <script src="lib/jquery.fileupload.js"></script>
+    <script src="lib/jquery.fileupload-process.js"></script>
+    <script src="lib/jquery.fileupload-angular.js"></script>
 
     <!-- build:js({.tmp,src}) scripts/app.js -->
     <script src="app/index.js"></script>
     <script src="app/main/main.controller.js"></script>
+    <script src="app/dash/dash.controller.js"></script>
     <script src="components/navbar/navbar.controller.js"></script>
+    <script src="components/gpx/gpx_upload.js"></script>
     <script src="components/authentication/authentication.controller.js"></script>
 
     <script src="common/js/services/api.js"></script>
+    <script src="common/js/services/authorize.js"></script>
     <script src="common/js/services/checkpoints.js"></script>
+    <script src="common/js/services/courses.js"></script>
     <script src="common/js/services/geolocation.js"></script>
     <script src="common/js/services/leaderboard.js"></script>
+    <script src="common/js/controllers/my_courses.js"></script>
     
     <!-- inject:partials -->
     <!-- angular templates will be automaticaly converted in js and inserted here -->

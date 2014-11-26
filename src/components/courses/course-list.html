@@ -1,0 +1,10 @@
+<div class="course-list">
+  <div class="item item-avatar"
+     ng-repeat="course in courses"
+     href="#/course/{{course.id}}">
+    <img src="{{ course.creator.person.avatar }}"/>
+    <strong> {{ course.name }}</strong>
+    <p>{{ course.created_at | date : 'short' }}</p>
+  </div>
+</div>
+

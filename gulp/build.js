@@ -48,7 +48,7 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
   var assets;
 
   return gulp.src('src/*.html')
-    .pipe($.inject(gulp.src('src/{app,components,common}/**/*.js',{read:false}), {
+/*    .pipe($.inject(gulp.src('src/{app,components,common}/** /*.js',{read:false}), {
       read: false,
       starttag: '<!-- inject:partials -->',
       addRootSlash: false,
@@ -74,7 +74,7 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
     }))
     .pipe(htmlFilter.restore())
     .pipe(gulp.dest('dist'))
-    .pipe($.size());
+    .pipe($.size()) */;
 });
 
 gulp.task('images', function () {
