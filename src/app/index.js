@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('orienteerio', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router','orienteer.services','orienteer.controllers','blueimp.fileupload'])
+angular.module('orienteerio', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router','orienteer.services','orienteer.controllers','blueimp.fileupload','orienteerFilters','leaflet-directive'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -16,8 +16,13 @@ angular.module('orienteerio', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize'
       .state('course-detail',{
         url: '/course/:id',
         templateUrl: 'app/courses/show.html',
-        controller: 'CourseCtrl'
-      });
+        controller: 'CourseShowCtrl'
+      })
+      .state('course-edit',{
+        url: '/course/:id/edit',
+        templateUrl: 'app/courses/edit.html',
+        controller: 'CourseEditCtrl'
+      })
     ;
 
     $urlRouterProvider.otherwise('/');

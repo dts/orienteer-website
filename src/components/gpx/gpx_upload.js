@@ -1,6 +1,6 @@
 angular.module('orienteerio').controller(
   'GpxFileUploadCtrl',function($scope,$http,$filter,$window,API,$state) {
-    $scope.status = "status";
+    $scope.status = "";
 
     var FileUploadOptions = {
       dataType: 'json',

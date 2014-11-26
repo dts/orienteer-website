@@ -1,0 +1,42 @@
+<div ng-include="'components/navbar/navbar.html'"/>
+<div class="row">
+  <div class="large-4 columns">
+    <form>
+      <label>Course Name
+        <input type="text" placeholder="Inputs and other form elements go inside..." ng-model="course.name">
+      </label>
+      <label>Click to create CPs:
+      <span class="switch round">
+        <input id="switch_to_create_cps" type="checkbox" ng-model="click_to_create">
+        <label for="switch_to_create_cps">Hahaha</label>
+      </span>
+{{click_to_create}}
+      </label>
+      <div ng-if="focused = focused_checkpoint()">
+        <strong>Focused Checkpoint</strong>
+        <label>Checkpoint name
+        <input type="text" ng-model="focused.message">
+        </label>
+        <button class="button expand alert" ng-click="delete_focused()">Remove {{ focused.message || "Unnamed CP"}}</button>
+      </div>
+      
+    </form>
+    <br/>
+    <button class="button expand" ng-click="save()">Save</button>
+  </div>
+  <div class="large-8 columns">
+        <leaflet class="full-image"
+                 layers="layers"
+                 ng-if="loaded" 
+                 markers="checkpoints"
+                 event-broadcast="events"
+                 bounds="bounds"
+                 center="center"
+                 width="100%"
+                 height="400px">
+        </leaflet>
+  </div>
+
+</div>
+
+
