@@ -13,7 +13,8 @@
     "angular-ui-router" : "0.2.x",
     "angular-leaflet-directive" : "latest",
     "lodash" : "latest",
-    "foundation" : "5.4.x"
+    "foundation" : "5.4.x",
+    "jquery-file-upload" : "latest"
   },
   "devDependencies": {
     "angular-mocks": "1.3.x"
