@@ -1,0 +1,11 @@
+#!/bin/bash
+VERSION=`date +%Y%m%d%H%M%S`
+HOST=orienteer-1.orienteer.io
+SITE=orienteer.io
+DIR=/www/sites/$SITE/releases/$VERSION
+LINK=/www/sites/$SITE/current
+
+#gulp build
+rsync -rv dist/* deploy@$HOST:$DIR
+ssh deploy@orienteer-1.orienteer.io "rm $LINK ; ln -s $DIR $LINK"
+
