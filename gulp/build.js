@@ -21,7 +21,7 @@ gulp.task('styles', ['wiredep'],  function () {
 });
 
 gulp.task('scripts', function () {
-  return gulp.src('src/{app,components,common}/**/*.js')
+  return gulp.src('src/{app,components,common,lib}/**/*.js')
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.size());
@@ -35,7 +35,9 @@ gulp.task('partials', function () {
       quotes: true
     }))
     .pipe($.ngHtml2js({
-      moduleName: 'orienteerio'
+      moduleName: 'orienteerio',
+      declareModule: false,
+      stripPrefix: 'src/'
     }))
     .pipe(gulp.dest('.tmp'))
     .pipe($.size());
@@ -48,7 +50,7 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
   var assets;
 
   return gulp.src('src/*.html')
-/*    .pipe($.inject(gulp.src('src/{app,components,common}/** /*.js',{read:false}), {
+    .pipe($.inject(gulp.src('{src,.tmp}/{app,components,common,lib}/**/*.js',{read:false}), {
       read: false,
       starttag: '<!-- inject:partials -->',
       addRootSlash: false,
@@ -58,7 +60,7 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
     .pipe($.rev())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
-    .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
+//    .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
     .pipe($.csso())
@@ -74,7 +76,7 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
     }))
     .pipe(htmlFilter.restore())
     .pipe(gulp.dest('dist'))
-    .pipe($.size()) */;
+    .pipe($.size());
 });
 
 gulp.task('images', function () {
