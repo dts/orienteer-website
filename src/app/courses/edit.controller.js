@@ -1,5 +1,5 @@
 angular.module('orienteerio').controller(
-  'CourseEditCtrl',function($state,Courses,$scope,$stateParams,Leaderboard,leafletBoundsHelpers,Checkpoints,API,Authorize)
+  'CourseEditCtrl',function($state,Courses,$scope,$stateParams,Leaderboard,leafletBoundsHelpers,Checkpoints,API)
   {
     angular.extend($scope, {
       loaded : false,

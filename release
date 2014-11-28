@@ -5,7 +5,10 @@ SITE=orienteer.io
 DIR=/www/sites/$SITE/releases/$VERSION
 LINK=/www/sites/$SITE/current
 
-#gulp build
+echo "buidling...."
+gulp build
+echo "uploading..."
 rsync -rv dist/* deploy@$HOST:$DIR
+echo "launching..."
 ssh deploy@orienteer-1.orienteer.io "rm $LINK ; ln -s $DIR $LINK"
 

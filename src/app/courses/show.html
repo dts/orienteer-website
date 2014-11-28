@@ -1,6 +1,4 @@
-<div ng-include="'components/navbar/navbar.html'"/>
 <div class="row">
-
   <div class="large-4 columns">
     <div class="card">
       <div class="item item-avatar">
@@ -10,10 +8,10 @@
       </div>
     </div>
     <button ng-if="editable" class="button expand" ng-click="edit()">Edit</button>
+    <button class="button expand" ng-click="print()">Print using CalTopo</button>
   </div>
   <div class="large-4 columns">
         <leaflet class="full-image"
-                 ng-if="loaded" 
                  markers="checkpoints"
                  bounds="bounds"
                  center="center"
@@ -26,7 +24,7 @@
     <h3>Leaderboard</h3>
     <div ng-include src="'components/leaderboard/partial.html'"></div>
   </div>
-
+  <form class="printit" target="_blank" action="http://caltopo.com/print" method="POST">
+    <input type="hidden" name="state">
+  </form>
 </div>
-
-

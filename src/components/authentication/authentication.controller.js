@@ -19,7 +19,7 @@ angular.module('orienteerio')
 
     API.login($scope.data.username,$scope.data.password).then(
       function() {
-        $state.go('dash');
+        $state.go('logged-in.dash');
       },
       function(error) {
         $scope.status = error.description;
@@ -34,7 +34,7 @@ angular.module('orienteerio')
 
     API.sign_up($scope.data).then(
       function() {
-        $state.go('dash');
+        $state.go('logged-in.dash');
       },
       function(error) {
         $scope.status = error.description;

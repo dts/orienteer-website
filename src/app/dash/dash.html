@@ -1,8 +1,7 @@
-<div ng-include="'components/navbar/navbar.html'"/>
 <div class="row">
   <div class="large-4 columns">
     <h3>Your Courses</h3>
-    <div ng-include="'components/courses/course-list.html'" ng-controller="MyCoursesCtrl" />
+    <div ng-include="'components/courses/course-list.html'" ng-controller="MyCoursesCtrl"></div>
     <form id="fileupload" 
           data-url="http://api.orienteer.io/upload_gpx"
           method="POST" enctype="multipart/form-data" 

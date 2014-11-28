@@ -12,7 +12,7 @@ angular.module('orienteerio').controller(
           if(response.result.error) {
             $scope.status = response.result.error;
           } else {
-            $state.go('course-detail',{ id : response.result.id });
+            $state.go('logged-in.course-detail',{ id : response.result.id });
           }
         });
 //         ORM.courses.add(response.result,{ parse:true,merge:true });

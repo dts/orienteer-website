@@ -1,4 +1,3 @@
-<div ng-include="'components/navbar/navbar.html'"/>
 <div class="row">
   <div class="large-4 columns">
     <form>
@@ -8,9 +7,8 @@
       <label>Click to create CPs:
       <span class="switch round">
         <input id="switch_to_create_cps" type="checkbox" ng-model="click_to_create">
-        <label for="switch_to_create_cps">Hahaha</label>
+        <label for="switch_to_create_cps"></label>
       </span>
-{{click_to_create}}
       </label>
       <div ng-if="focused = focused_checkpoint()">
         <strong>Focused Checkpoint</strong>
