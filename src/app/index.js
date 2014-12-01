@@ -5,7 +5,7 @@ angular.module(
   ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 
    'ui.router','orienteer.services','orienteer.controllers',
    'blueimp.fileupload','orienteerFilters','leaflet-directive',
-   'exceptionOverride'])
+   'exceptionOverride','restangular'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('login', {
@@ -34,23 +34,28 @@ angular.module(
         controller: 'DashCtrl'
       })
       .state('logged-in.course',{
+        abstract: true,
         url: '/course/:id',
-        templateUrl: 'app/courses/show.html',
-        controller: 'CourseShowCtrl',
+        template: '<ui-view></ui-view>',
         resolve : {
           leaderboard : function($stateParams,Leaderboard) {
             return Leaderboard.get({ id : $stateParams.id }).$promise;
           },
           checkpoints : function($stateParams,Checkpoints) {
-            return Checkpoints.query({ course_id : $stateParams.id }).$promise;
+            return Checkpoints.getList({ course_id : $stateParams.id });
           },
           course : function($stateParams,Courses) {
             return Courses.get({ id : $stateParams.id }).$promise;
           }
         }
       })
+      .state('logged-in.course.show',{
+        templateUrl: 'app/courses/show.html',
+        controller: 'CourseShowCtrl',
+        url: '/show',
+      })
       .state('logged-in.course.edit',{
-        url: '/course/:id/edit',
+        url: '/edit',
         templateUrl: 'app/courses/edit.html',
         controller: 'CourseEditCtrl'
       })

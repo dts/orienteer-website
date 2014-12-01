@@ -16,6 +16,7 @@ gulp.task('wiredep', function () {
                 /jquery.fileupload-image.js/,
                 /jquery.fileupload-validate.js/,
                 /jquery.fileupload-ui.js/,
+                /leaflet.js/,
                 /blueimp-load-image/
                ],
       

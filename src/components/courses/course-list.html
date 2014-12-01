@@ -1,8 +1,8 @@
 <div class="course-list">
   <a class="item item-avatar"
      ng-repeat="course in courses"
-     href="#/course/{{course.id}}">
-    <img src="{{ course.creator.person.avatar }}"/>
+     ui-sref="logged-in.course.show({id : course.id})">
+    <img ng-src="{{course.creator.person.avatar}}"/>
     <strong> {{ course.name }}</strong>
     <p>{{ course.created_at | date : 'short' }}</p>
   </div>
