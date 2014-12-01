@@ -1,8 +1,10 @@
 angular.module('orienteerio').controller(
   'CourseShowCtrl',
   function($state,course,$scope,$stateParams,leaderboard,
-           leafletBoundsHelpers,checkpoints,API,
-           CaltopoPrintConverter,logged_in_member_id,LeafletLayers)
+           CourseBoundsConverter,checkpoints,API,
+           CaltopoPrintConverter,logged_in_member_id,LeafletLayers,
+           LeafletCheckpointHelpers
+          )
   {
     angular.extend($scope, {
       bounds: {},
@@ -13,19 +15,12 @@ angular.module('orienteerio').controller(
       layers: { baselayers: LeafletLayers },
       leaderboard : leaderboard,
       course : course,
-      checkpoints: checkpoints,
+      checkpoints: LeafletCheckpointHelpers.toLeaflet(checkpoints),
       member_id : logged_in_member_id,
       editable : (course.member_id == logged_in_member_id)
     });
 
-    var n = Number(course.bounds.n);
-    var e = Number(course.bounds.e);
-    var s = Number(course.bounds.s);
-    var w = Number(course.bounds.w);
-
-    $scope.bounds = leafletBoundsHelpers.createBoundsFromArray(
-      [ [ n,e ] , [ s,w ]]
-    );
+    $scope.bounds = CourseBoundsConverter(course);
     
     $scope.edit = function() {
       $state.go('logged-in.course.edit',{ id : $scope.course.id });

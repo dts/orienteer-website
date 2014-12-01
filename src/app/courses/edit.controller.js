@@ -1,32 +1,11 @@
 angular.module('orienteerio').controller(
   'CourseEditCtrl',
   function($state,course,$scope,$stateParams,leaderboard,
-           leafletBoundsHelpers,checkpoints,API,LeafletLayers,
+           CourseBoundsConverter,checkpoints,API,LeafletLayers,
            leafletMarkersHelpers,LeafletCheckpointHelpers,
            CheckpointIcons,$timeout,
            logged_in_member_id)
   {
-    var RemoveIcon = {
-      type: 'awesomeMarker',
-      icon: 'android-close',
-      prefix: 'ion',
-      extraClasses: 'icon',
-      markerColor: 'red'
-    };
-    
-    var NormalIcon = {
-      type: 'awesomeMarker',
-      icon: 'flag',
-      prefix: 'ion',
-      extraClasses: 'icon',
-      markerColor: 'blue'
-    };
-
-    var leaflet_ct = 1;
-    function to_leaflet(cp) {
-      return ;
-    };
-
     angular.extend($scope, {
       loaded : false,
       bounds: {},
@@ -48,6 +27,7 @@ angular.module('orienteerio').controller(
       member_id : logged_in_member_id,
     });
 
+    $scope.bounds = CourseBoundsConverter(course);
     $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints);
     
     $scope.$on('leafletDirectiveMap.click',function(event,args) {
@@ -71,13 +51,13 @@ angular.module('orienteerio').controller(
       var focused = $scope.focused_checkpoint();
 
       focused.removed = true;
-      focused.icon = RemoveIcon;
+      focused.icon = CheckpointIcons.removed;
       focused.focus = true;
     }
     $scope.replace_focused = function() {
       var focused = $scope.focused_checkpoint();
       focused.removed = false;
-      focused.icon = NormalIcon;
+      focused.icon = CheckpointIcons.normal;
 
       focused.focus = true;
     }
@@ -103,15 +83,8 @@ angular.module('orienteerio').controller(
         }
       );
     }
+    
+
     $scope.member_id = API.member_id();
-
-    var n = Number(course.bounds.n);
-    var e = Number(course.bounds.e);
-    var s = Number(course.bounds.s);
-    var w = Number(course.bounds.w);
-
-    $scope.bounds = leafletBoundsHelpers.createBoundsFromArray(
-      [ [ n,e ] , [ s,w ]]
-    );
   }
 );
