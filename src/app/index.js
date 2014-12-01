@@ -45,7 +45,7 @@ angular.module(
             return Checkpoints.getList({ course_id : $stateParams.id });
           },
           course : function($stateParams,Courses) {
-            return Courses.get({ id : $stateParams.id }).$promise;
+            return Courses.one($stateParams.id).get();
           }
         }
       })
@@ -64,9 +64,6 @@ angular.module(
     $urlRouterProvider.otherwise('/');
   })
 ;
-
-var Services = angular.module('orienteer.services',[]);
-var Controllers = angular.module('orienteer.controllers',[]);
 
 angular.module('exceptionOverride', []).factory('$exceptionHandler', function() {
   return function(exception, cause) {

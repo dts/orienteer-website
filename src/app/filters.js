@@ -1,3 +1,4 @@
+'use strict';
 (function() {
 function pad(n, width, z) {
   z = z || '0';
@@ -12,8 +13,8 @@ angular.module('orienteerFilters',[]).filter(
       seconds -= hours*60*60;
       var minutes = Math.floor(seconds / 60);
       seconds -= minutes*60;
-      if(hours) { return hours+":"+pad(minutes,2)+":"+pad(seconds,2); }
-      return pad(minutes,2)+":"+pad(seconds,2);
+      if(hours) { return hours+':'+pad(minutes,2)+':'+pad(seconds,2); }
+      return pad(minutes,2)+':'+pad(seconds,2);
     };
   }
 );
