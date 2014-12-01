@@ -69,19 +69,25 @@ angular.module('orienteerio').controller(
         checkpoints
       );
       
-      checkpoints.save().then(
+      course.save().then(
         function() {
-          $scope.checkpoints = [];
-
-          $timeout(function() {
-            $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints);
-          },100);
-        },
-        function() {
-          alert("Error saving checkpoints :(");
-          console.log("Error saving checkpoints ",arguments);
-        }
-      );
+          checkpoints.save().then(
+            function() {
+              $scope.checkpoints = [];
+              
+              $timeout(function() {
+                $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints);
+              },100);
+            },
+            function() {
+              alert("Error saving checkpoints :(");
+              console.log("Error saving checkpoints ",arguments);
+            }
+          );
+        },function() {
+          alert("Error saving course :(");
+          console.log("Error saving course: ",arguments);
+        });
     }
     
 
