@@ -1,5 +1,8 @@
+'use strict';
+
 angular.module('orienteerio').controller(
   'DashCtrl',
-  function($scope,$rootScope,API,Courses) {
+  function(myCourses,$scope) {
+    $scope.courses = myCourses;
   }
 );

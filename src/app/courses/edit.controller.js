@@ -1,10 +1,12 @@
+'use strict';
+
 angular.module('orienteerio').controller(
   'CourseEditCtrl',
   function($state,course,$scope,$stateParams,leaderboard,
-           CourseBoundsConverter,checkpoints,API,LeafletLayers,
+           courseBoundsConverter,checkpoints,API,LeafletLayers,
            leafletMarkersHelpers,LeafletCheckpointHelpers,
            CheckpointIcons,$timeout,
-           logged_in_member_id)
+           loggedInMemberId,_,alert)
   {
     angular.extend($scope, {
       loaded : false,
@@ -24,14 +26,14 @@ angular.module('orienteerio').controller(
       },
       leaderboard : leaderboard,
       course : course,
-      member_id : logged_in_member_id,
+      memberId : loggedInMemberId,
     });
 
-    $scope.bounds = CourseBoundsConverter(course);
+    $scope.bounds = (courseBoundsConverter)(course);
     $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints);
     
     $scope.$on('leafletDirectiveMap.click',function(event,args) {
-      if($scope.click_to_create) {
+      if($scope.clickToCreate) {
         $scope.checkpoints.push( { message : '', focus: true, draggable: true,
                                    lat: args.leafletEvent.latlng.lat,
                                    lng: args.leafletEvent.latlng.lng,
@@ -42,25 +44,25 @@ angular.module('orienteerio').controller(
     }
               );
 
-    $scope.focused_checkpoint = function() {
+    $scope.focusedCheckpoint = function() {
       var ret = _.find($scope.checkpoints,function(cp) { return cp.focus; });
-      console.log("Focused checkpoing? ",ret);
+      console.log('Focused checkpoing? ',ret);
       return ret;
     };
-    $scope.delete_focused = function() {
-      var focused = $scope.focused_checkpoint();
+    $scope.deleteFocused = function() {
+      var focused = $scope.focusedCheckpoint();
 
       focused.removed = true;
       focused.icon = CheckpointIcons.removed;
       focused.focus = true;
-    }
-    $scope.replace_focused = function() {
-      var focused = $scope.focused_checkpoint();
+    };
+    $scope.replaceFocused = function() {
+      var focused = $scope.focusedCheckpoint();
       focused.removed = false;
       focused.icon = CheckpointIcons.normal;
 
       focused.focus = true;
-    }
+    };
   
     
     $scope.save = function() {
@@ -80,17 +82,14 @@ angular.module('orienteerio').controller(
               },100);
             },
             function() {
-              alert("Error saving checkpoints :(");
-              console.log("Error saving checkpoints ",arguments);
+              alert('Error saving checkpoints :(');
+              console.log('Error saving checkpoints ',arguments);
             }
           );
         },function() {
-          alert("Error saving course :(");
-          console.log("Error saving course: ",arguments);
+          alert('Error saving course :(');
+          console.log('Error saving course: ',arguments);
         });
-    }
-    
-
-    $scope.member_id = API.member_id();
+    };
   }
 );

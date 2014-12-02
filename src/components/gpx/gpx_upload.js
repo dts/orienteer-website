@@ -1,6 +1,8 @@
+'use strict';
+
 angular.module('orienteerio').controller(
-  'GpxFileUploadCtrl',function($scope,$http,$filter,$window,API,$state) {
-    $scope.status = "";
+  'GpxFileUploadCtrl',function($scope,$http,$filter,$window,API,$state,$) {
+    $scope.status = '';
 
     var FileUploadOptions = {
       dataType: 'json',
@@ -20,9 +22,9 @@ angular.module('orienteerio').controller(
     };
 
 
-    $scope.options = { url : "http://api.orienteer.io/upload_gpx",
+    $scope.options = { url : 'http://api.orienteer.io/upload_gpx',
     acceptFileTypes: /(\.|\/)(gpx)$/i };
-
+    
     $('#fileupload').fileupload(FileUploadOptions);
   }
 );

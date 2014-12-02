@@ -4,3 +4,12 @@
   -moz-border-radius: $radius;
   border-radius: $radius;
 }
+
+@mixin ionicon {
+  font-family: "Ionicons";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+}

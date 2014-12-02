@@ -2,7 +2,7 @@
   <a class="item item-avatar"
      ng-repeat="course in courses"
      ui-sref="logged-in.course.show({id : course.id})">
-    <img ng-src="{{course.creator.person.avatar}}"/>
+    <img ng-src="{{course.creator.person.avatar}}"></img>
     <strong> {{ course.name }}</strong>
     <p>{{ course.created_at | date : 'short' }}</p>
   </div>

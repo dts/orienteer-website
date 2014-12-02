@@ -1,9 +1,11 @@
+'use strict';
+/*jshint -W069 */
 angular.module('orienteerio').controller(
   'CourseShowCtrl',
   function($state,course,$scope,$stateParams,leaderboard,
-           CourseBoundsConverter,checkpoints,API,
-           CaltopoPrintConverter,logged_in_member_id,LeafletLayers,
-           LeafletCheckpointHelpers
+           courseBoundsConverter,checkpoints,API,
+           caltopoPrintConverter,loggedInMemberId,LeafletLayers,
+           LeafletCheckpointHelpers,$
           )
   {
     angular.extend($scope, {
@@ -16,20 +18,20 @@ angular.module('orienteerio').controller(
       leaderboard : leaderboard,
       course : course,
       checkpoints: LeafletCheckpointHelpers.toLeaflet(checkpoints),
-      member_id : logged_in_member_id,
-      editable : (course.member_id == logged_in_member_id)
+      memberId : loggedInMemberId,
+      editable : (course['member_id'] === loggedInMemberId)
     });
 
-    $scope.bounds = CourseBoundsConverter(course);
+    $scope.bounds = courseBoundsConverter(course);
     
     $scope.edit = function() {
       $state.go('logged-in.course.edit',{ id : $scope.course.id });
-    }
+    };
     
     $scope.print = function() {
-      $('form.printit input').val(JSON.stringify(CaltopoPrintConverter($scope.checkpoints)));
+      $('form.printit input').val(JSON.stringify(caltopoPrintConverter($scope.checkpoints)));
       $('form.printit').submit();
-    }
+    };
     
   }
 );

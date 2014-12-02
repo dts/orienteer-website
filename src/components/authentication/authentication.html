@@ -1,29 +1,29 @@
-<form>
+<form  ng-controller="AuthenticationCtrl">
     <label>Email
-      <input ng-class="data_errors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
+      <input ng-class="dataErrors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
     </label>
-    <small class="error" ng-if="data_errors.username">{{ data_errors.username }}</small>
+    <small class="error" ng-if="dataErrors.username">{{ dataErrors.Username }}</small>
     <label>Password
-      <input ng-class="data_errors.password?'error':''" type="password" placeholder="idunno24" ng-model="data.password">
+      <input ng-class="dataErrors.password?'error':''" type="password" placeholder="idunno24" ng-model="data.password">
     </label>
-    <small class="error" ng-if="data_errors.password">{{ data_errors.password }}</small>
-    <div ng-if="signing_up" class="fade">
+    <small class="error" ng-if="dataErrors.password">{{ dataErrors.password }}</small>
+    <div ng-if="signingUp" class="fade">
       <p>Great!  Let us know what you'd like to call you, and we'll
       sort the rest out later!</p>
       <label>First Name
-        <input ng-class="data_errors.fname?'error':''" type="text" ng-model="data.fname">
+        <input ng-class="dataErrors.fname?'error':''" type="text" ng-model="data.fname">
       </label>
-      <small class="error" ng-if="data_errors.fname">{{ data_errors.fname }}</small>
+      <small class="error" ng-if="dataErrors.fname">{{ dataErrors.fname }}</small>
       <label>Last Name
-        <input  ng-class="data_errors.lname?'error':''" type="text" ng-model="data.lname">
-      <small class="error" ng-if="data_errors.lname">{{ data_errors.lname }}</small>
+        <input  ng-class="dataErrors.lname?'error':''" type="text" ng-model="data.lname">
+      <small class="error" ng-if="dataErrors.lname">{{ dataErrors.lname }}</small>
       </label>
       {{ status }}
-      <button type="submit" class="button expand" ng-click="sign_up()">Sign Up</button>
+      <button type="submit" class="button expand" ng-click="signUp()">Sign Up</button>
     </div>
-    <div ng-if="!signing_up">
+    <div ng-if="!signingUp">
       {{ status }}
-      <button type="submit" class="button expand" ng-click="log_in()">You know what to do.</button>
-      <button class="button secondary expand" ng-click="show_sign_up()">I'd like to sign up!</button>
+      <button type="submit" class="button expand" ng-click="logIn()">You know what to do.</button>
+      <button class="button secondary expand" ng-click="showSignUp()">I'd like to sign up!</button>
     </div>
 </form>

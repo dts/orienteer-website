@@ -3,7 +3,7 @@
        ng-repeat="leader in leaderboard"
        >
     <span class="placement">{{$index+1}}</span>
-    <img src="{{leader.runner.avatar}}"></img>
+    <img ng-src="{{leader.runner.avatar}}"></img>
     <span class="name">{{ leader.runner.name }} ({{leader.visits_count}} cps, {{ leader.completion_time | elapsed_time }})</span>
   </div>
 </div>

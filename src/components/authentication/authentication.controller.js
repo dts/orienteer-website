@@ -1,21 +1,23 @@
+'use strict';
+
 angular.module('orienteerio')
 .controller('AuthenticationCtrl',function($scope,API,$state) {
   $scope.data = {
-    username: API.saved_username(),
-    password: "",
-    fname: "",
-    lname: ""
+    username: API.savedUsername(),
+    password: '',
+    fname: '',
+    lname: ''
   };
 
-  $scope.data_errors = {
+  $scope.dataErrors = {
 
   };
 
-  $scope.signing_up = false;
+  $scope.signingUp = false;
 
-  $scope.log_in = function() {
-    $scope.data_errors = {};
-    $scope.status = "";
+  $scope.logIn = function() {
+    $scope.dataErrors = {};
+    $scope.status = '';
 
     API.login($scope.data.username,$scope.data.password).then(
       function() {
@@ -23,28 +25,28 @@ angular.module('orienteerio')
       },
       function(error) {
         $scope.status = error.description;
-        $scope.data_errors = error.validation_errors;
+        $scope.dataErrors = error.validationErrors;
       }
     );
-  }
+  };
   
-  $scope.sign_up = function() {
-    $scope.data_errors = {};
-    $scope.status = "";
+  $scope.signUp = function() {
+    $scope.dataErrors = {};
+    $scope.status = '';
 
-    API.sign_up($scope.data).then(
+    API.signUp($scope.data).then(
       function() {
         $state.go('logged-in.dash');
       },
       function(error) {
         $scope.status = error.description;
-        $scope.data_errors = error.validation_errors;
+        $scope.dataErrors = error.validationErrors;
       }
-    )
-  }
+    );
+  };
 
-  $scope.show_sign_up = function() {
-    $scope.signing_up = true;
-  }
+  $scope.showSignUp = function() {
+    $scope.signingUp = true;
+  };
 }
 );

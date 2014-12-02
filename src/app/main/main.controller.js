@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('orienteerio')
-  .controller('MainCtrl', function ($scope,API) {
+  .controller('MainCtrl', function () {
   });
 
