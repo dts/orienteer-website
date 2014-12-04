@@ -28,7 +28,6 @@ angular.module('orienteerio').controller(
       course : course,
       memberId : loggedInMemberId,
     });
-
     $scope.bounds = (courseBoundsConverter)(course);
     $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints);
     
@@ -63,7 +62,19 @@ angular.module('orienteerio').controller(
 
       focused.focus = true;
     };
-  
+
+    $scope.remove = function() {
+      if(confirm("Are you sure?")) {
+        $scope.course.remove().then(
+          function() {
+            $state.go('logged-in.dash');
+          },
+          function(error) {
+            alert("An error occurred while trying to delete that course...");
+          }
+        );
+      }
+    }
     
     $scope.save = function() {
       LeafletCheckpointHelpers.fromLeaflet(
