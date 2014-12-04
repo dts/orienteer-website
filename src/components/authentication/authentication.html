@@ -1,6 +1,6 @@
 <form  ng-controller="AuthenticationCtrl">
-    <label>Email
-      <input ng-class="dataErrors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
+  <label>Email
+    <input ng-class="dataErrors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
     </label>
     <small class="error" ng-if="dataErrors.username">{{ dataErrors.Username }}</small>
     <label>Password

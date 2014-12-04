@@ -1,4 +1,16 @@
+@import '../../bower_components/foundation/scss/foundation';
 @import "mixins";
+
+.front-page-jumbotron {
+  & , & h1 {
+    font-weight: 500;
+    color: white;
+    text-shadow: rgba(0,0,0,0.498) 1px 1px 0px;
+  }
+  @media #{$medium-up} {
+    padding: 4em;
+  }
+}
 
 .browsehappy {
   margin: 0.2em 0;
@@ -44,3 +56,4 @@
 @import "courses";
 @import "social";
 @import "passport";
+@import "pretty_bg";
