@@ -25,18 +25,19 @@ angular.module(
             }
           }
         },
+        controller: 'LoggedInCtrl',
         templateUrl: 'app/logged_in/logged_in.html',
         abstract: true
       })
       .state('logged-in.dash',{
         url: '/dash',
         templateUrl : 'app/dash/dash.html',
-        controller: 'DashCtrl',
-        resolve : {
-          myCourses : function(Courses,loggedInMemberId) {
-            return Courses.getList({ 'member_id' : loggedInMemberId });
-          }
-        }
+        controller: 'DashCtrl'
+      })
+      .state('logged-in.create-course',{
+        templateUrl : 'app/courses/create.html',
+        controller: 'CourseCreateCtrl',
+        url: '/courses/create'
       })
       .state('logged-in.course',{
         abstract: true,
@@ -64,6 +65,17 @@ angular.module(
         templateUrl: 'app/courses/edit.html',
         controller: 'CourseEditCtrl'
       })
+      .state('logged-in.course.run',{
+        url: '/run',
+        templateUrl: 'app/courses/run.html',
+        controller: 'CourseRunCtrl'
+      })
+
+      .state('logged-in.settings',{
+        url: '/settings',
+        templateUrl: 'app/settings/settings.html',
+        controller: 'SettingsCtrl'
+      })
     ;
 
     $urlRouterProvider.otherwise('/');
@@ -73,6 +85,7 @@ angular.module('orienteer.services',[]);
 angular.module('orienteer.controllers',[]);
 angular.module('orienteer.directives',[]);
 // ugly hack to make jQuery work and strict mode stfu.
+angular.module('orienteerio').factory('ApiUri',function() { return "http://api.orienteer.io/api/"; });
 angular.module('orienteerio').factory('$',function($window) { return $window.$; });
 angular.module('orienteerio').factory('_',function($window) { return $window._; });
 angular.module('orienteerio').factory('alert',function($window) { return $window.alert; });

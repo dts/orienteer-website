@@ -1,0 +1,31 @@
+<div ng-controller="AccountSettingsCtrl">
+<form>
+<h3>Account</h3>
+<div ng-show="person.fromServer">
+  <label>Name
+  <input type="text" ng-model="person.name"></input>
+  </label>
+  <label ng-repeat="email in emails">Email
+<div class="row collapse">
+  <div class="small-10 columns" >
+    <input type="email" ng-model="email.address"></input>
+    </div>
+  <div class="small-2 columns">
+    <a href="#" class="button alert postfix"><i class="icon ion-close-round"></i></a>
+  </div>
+  </div>
+  </label>
+  <label>Avatar
+  <input type="file"></input>
+  <img ng-src="{{person.avatar}}"></img>
+  </label>
+<div ng-if="show_error" class="alert-box alert radius fade">
+{{ error }}
+  <a ng-click="clearError();">&times;</a>
+</div>
+  <button class="button expand" ng-click="save()">Save <i
+  ng-if="saving" class="icon ion-loading-b"></i></button>
+</div>
+</form>
+<button class="button button-secondary expand" ng-click="logout()">Log out</button>
+</div>

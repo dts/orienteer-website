@@ -27,6 +27,10 @@ angular.module('orienteerio').controller(
     $scope.edit = function() {
       $state.go('logged-in.course.edit',{ id : $scope.course.id });
     };
+
+    $scope.run = function() {
+      $state.go('logged-in.course.run',{ id : $scope.course.id });
+    }
     
     $scope.print = function() {
       $('form.printit input').val(JSON.stringify(caltopoPrintConverter($scope.checkpoints)));

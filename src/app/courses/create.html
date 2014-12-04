@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="small-6 centered column columns"
+       ng-if="creating"
+       >
+    <div>Creating a course just for you...</div>
+    <i class="icon ion-loading-b"></i>
+  </div>
+  <div class="small-6 centered columns"
+       ng-if="status"
+       >
+    {{ status }}
+  </div>
+</div>

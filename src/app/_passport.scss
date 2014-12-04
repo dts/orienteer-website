@@ -1,0 +1,40 @@
+checkpoint {
+  padding-left: 35px;
+  position: relative;
+  display: inline-block;
+  float: left;
+  background-color: $stable;
+  width: 30%;
+  height: 45px;
+  overflow: hidden;
+  border: $dark 1px solid;
+  margin: 1%;
+}
+
+checkpoint.visited {
+  background-color: $balanced;
+}
+
+checkpoint i {
+  display: inline-block;
+  position: absolute;
+  font-size: 200%;
+  top: 8px;
+  left: 4px;
+}
+
+div p {
+  padding-top: 0.7em;
+  line-height: 100%;
+}
+
+.locating {
+  padding-top: 4em;
+  text-align: center;
+  i {
+    font-size: 6em;
+  }
+  h5 {
+    color: #666;
+  }
+}

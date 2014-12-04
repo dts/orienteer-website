@@ -7,8 +7,14 @@
         <p>{{ course.creator.person.name }}</p>
       </div>
     </div>
-    <button ng-if="editable" class="button expand" ng-click="edit()">Edit</button>
-    <button class="button expand" ng-click="print()">Print using CalTopo</button>
+    <button ng-if="editable" class="button expand secondary"
+            ng-click="edit()">Edit</button>
+    <div class="row">
+      <div class="small-6 columns"><a class="button small expand" ng-click="print()">Print using
+    CalTopo</a></div>
+    <div class="small-6 columns"><a class="button small expand"
+    ng-click="run()">Run</a></div>
+    </div>
   </div>
   <div class="large-4 columns">
         <leaflet class="full-image"

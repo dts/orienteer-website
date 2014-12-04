@@ -1,0 +1,29 @@
+<passport>
+  <div ng-if="!geolocation_supported" class="button button-full button-assertive">
+    Geolocation Not Supported
+  </div>
+  <button ng-if="geolocation_supported" class="button button-full button-positive" ng-click="check_in()">
+    Check In
+    <i ng-if="checking_in" class="ion-refreshing"></i>
+  </button>
+  <div ng-if="position_error" class="button button-full button-assertive">
+    {{ position_error }}
+  </div>
+  <div ng-if="message" class="button button-full button-{{ message_type }}">
+    {{ message }}
+  </div>
+  <div ng-if="network_message && !network_error" class="button button-full button-dark">
+    <i class="ion-looping" ng-if="network_activity"></i>
+    {{ network_message }}
+  </div>
+  <div ng-if="network_message && network_error" class="button button-full button-calm ">
+    <p>        <i class="ion-close-circled"></i>
+      Error communicating with server - don't worry, we'll sort it out later</p>
+  </div>
+  <checkpoint ng-repeat="cp in checkpoints" ng-class="cp_class(cp)" >
+    <i class="ion-ios7-checkmark-outline" ng-if="cp.visited"></i>
+    <i class="ion-ios7-circle-outline" ng-if="!cp.visited"></i>
+    {{ cp.name }}
+  </checkpoint>
+</passport>
+<br/>
