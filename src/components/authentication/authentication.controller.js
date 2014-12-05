@@ -48,5 +48,8 @@ angular.module('orienteerio')
   $scope.showSignUp = function() {
     $scope.signingUp = true;
   };
+  $scope.hideSignUp = function() {
+    $scope.signingUp = false;
+  };
 }
 );

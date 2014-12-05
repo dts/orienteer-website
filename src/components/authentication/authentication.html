@@ -1,4 +1,24 @@
 <form  ng-controller="AuthenticationCtrl">
+<!--  <div class="row">
+  <div class="row small-10 columns small-centered collapse prefix-radius">
+    <div class="small-3 columns">
+      <span class="prefix">Email</span>
+    </div>
+    <div class="small-9 columns">
+      <input type="text" placeholder="example@nowhere.com"></input>
+    </div>
+  </div>
+  </div>
+  <div class="row">
+    <div class="row small-10 columns small-centered collapse prefix-radius">
+    <div class="small-3 columns">
+      <span class="prefix">Password</span>
+    </div>
+    <div class="small-9 columns">
+      <input type="password" placeholder="example@nowhere.com"></input>
+    </div>
+    </div>
+    </div> -->
   <label>Email
     <input ng-class="dataErrors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
     </label>
@@ -19,7 +39,13 @@
       <small class="error" ng-if="dataErrors.lname">{{ dataErrors.lname }}</small>
       </label>
       {{ status }}
-      <button type="submit" class="button expand" ng-click="signUp()">Sign Up</button>
+      <button type="submit" class="button expand"
+              ng-click="signUp()">Sign Up</button>
+      <button class="button secondary expand"
+              ng-click="hideSignUp()"
+              >
+        Nope.
+      </button>
     </div>
     <div ng-if="!signingUp">
       {{ status }}
