@@ -1,8 +1,11 @@
 <passport>
-  <div ng-if="!geolocation_supported" class="button button-full button-assertive">
+  <div class="row fixed">
+    <div ng-if="!geolocation_supported" class="button button-full
+                                               expand button-assertive">
     Geolocation Not Supported
   </div>
-  <button ng-if="geolocation_supported" class="button button-full button-positive" ng-click="check_in()">
+    <div class="medium-centered small-12 medium-6 large-4 columns">
+  <button ng-if="geolocation_supported" class="button button-full expand button-positive" ng-click="check_in()">
     Check In
     <i ng-if="checking_in" class="ion-refreshing"></i>
   </button>
@@ -20,10 +23,14 @@
     <p>        <i class="ion-close-circled"></i>
       Error communicating with server - don't worry, we'll sort it out later</p>
   </div>
+    </div>
+    </div>
+  <div class="checkpoints">
   <checkpoint ng-repeat="cp in checkpoints" ng-class="cp_class(cp)" >
     <i class="ion-ios7-checkmark-outline" ng-if="cp.visited"></i>
     <i class="ion-ios7-circle-outline" ng-if="!cp.visited"></i>
     {{ cp.name }}
   </checkpoint>
+  </div>
 </passport>
 <br/>
