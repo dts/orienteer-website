@@ -15,6 +15,9 @@
         <label>Checkpoint name
         <input type="text" ng-model="focused.message">
         </label>
+        <label>Checkpoint description
+        <input type="text" ng-model="focused.description">
+        </label>
         <button class="button expand alert" 
                 ng-if="!focused.removed"
                 ng-click="deleteFocused()">
