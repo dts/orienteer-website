@@ -1,7 +1,7 @@
 <div class="pretty_bg"></div>
 <div class="row">
   <div class="large-10 large-centered front-page-jumbotron small-text-center columns">
-    <h1>Welcome to Orienteer.io!</h1>
+    <h1>Welcome to <span class="name">Orienteer.io<span class="tiny round beta button">Beta!</span></span></h1>
     <p>Orienteer.io is a place to create and share
     orienteering courses and to compete against friends.</p>
     <p>Think <a href="http://www.strava.com/">strava</a> for orienteers</p>
@@ -9,11 +9,11 @@
 </div>
 
 <div class="row">
-  <div class="small-8 medium-6 small-centered large-offset-2 large-4 large-uncentered columns">
+  <div class="small-12 medium-6 small-centered large-offset-2 large-4 large-uncentered columns">
     <div ng-include="'components/authentication/authentication.html'" ng-controller="AuthenticationCtrl">
     </div>
   </div>
-  <div class="small-8 large-4 medium-6 small-centered large-uncentered columns end">
+  <div class="small-12 large-4 medium-6 small-centered large-uncentered columns end">
     <div ng-include="'components/authentication/external_auth.html'"></div>
   </div>
 </div>

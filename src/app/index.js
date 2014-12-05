@@ -39,6 +39,11 @@ angular.module(
         controller: 'CourseCreateCtrl',
         url: '/courses/create'
       })
+      .state('logged-in.profile',{
+        url: '/member/:id',
+        templateUrl: 'app/profile/show.html',
+        controller: 'ProfileShowCtrl'
+      })
       .state('logged-in.course',{
         abstract: true,
         url: '/course/:id',
@@ -85,7 +90,7 @@ angular.module('orienteer.services',[]);
 angular.module('orienteer.controllers',[]);
 angular.module('orienteer.directives',[]);
 // ugly hack to make jQuery work and strict mode stfu.
-angular.module('orienteerio').factory('ApiUri',function() { return "http://api.orienteer.io/api/"; });
+angular.module('orienteerio').factory('ApiUri',function() { return "http://localhost:3003/api/"; });
 angular.module('orienteerio').factory('$',function($window) { return $window.$; });
 angular.module('orienteerio').factory('_',function($window) { return $window._; });
 angular.module('orienteerio').factory('alert',function($window) { return $window.alert; });
