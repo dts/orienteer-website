@@ -10,6 +10,20 @@
   @media #{$medium-up} {
     padding: 4em;
   }
+  h1 > .name {
+    display: inline-block;
+    position: relative;
+    .beta {
+      display: block;
+      position: absolute;
+      right: -45px;
+      top: -20px;
+      background-color: rgba(225,200,30,0.7);
+      font-weight: 450;
+      font-size: 0.5em;
+      color: white;
+    }
+  }
 }
 
 .browsehappy {
