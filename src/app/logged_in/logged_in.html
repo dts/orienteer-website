@@ -1,17 +1,49 @@
-<nav class="top-bar row" ng-controller="NavbarCtrl">
+<div class="off-canvas-wrap">
+<div class="inner-wrap">
+  <div class="fixed">
+    <nav class="tab-bar show-for-small-only">
+      <section class="left-small">
+        <a class="left-off-canvas-toggle menu-icon" href
+           ng-click="toggle_menu()">
+          <span></span>
+        </a>
+      </section>
+
+      <section class="middle tab-bar-section">
+        <h1 class="title">Orienteer.io</h1>
+      </section>
+    </nav>
+
+    <nav data-topbar role="navigation" class="top-bar row hide-for-small-only"
+  ng-controller="NavbarCtrl">
   <ul class="title-area">
     <li class="name">
-      <h1><a href="http://orienteer.io/">Orienteer.io</a></h1>
+    <h1><a href="http://orienteer.io/">Orienteer.io</a></h1>
     </li>
   </ul>
 
   <section class="top-bar-section">
-    <ul class="right">
-      <li ng-repeat="s in top_level_states"
-       ng-class="{ active : (state.current.name===s.state) }"><a
+  <ul class="right">
+    <li ng-repeat="s in top_level_states"
+    ng-class="{ active : (state.current.name===s.state) }"><a
     ui-sref="{{ s.state }}">{{s.name}}</a></li>
-    </ul>
+  </ul>
   </section>
-</nav>
+  </nav>
+  </div>
+  <aside class="left-off-canvas-menu">
+    <div class="fixed">
+  <ul class="off-canvas-list">
+    <li><label>Settings</label></li>
+    <li ng-repeat="s in top_level_states"
+    ng-class="{ active : (state.current.name===s.state) }"><a
+    ui-sref="{{ s.state }}">{{s.name}}</a></li>
+  </ul>
+  </div>
+  </aside>
 
-<div ui-view />
+  
+<div style="padding-top: 45px;" ui-view />
+
+</div>
+</div>

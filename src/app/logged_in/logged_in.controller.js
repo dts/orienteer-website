@@ -10,5 +10,9 @@ angular.module('orienteerio').controller(
       { state : 'logged-in.settings',
         name : 'Settings' }
     ];
+
+    $scope.toggle_menu = function() {
+      $('.off-canvas-wrap').foundation('offcanvas','toggle','move-right');
+    }
   }
 );
