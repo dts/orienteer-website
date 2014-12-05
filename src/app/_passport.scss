@@ -1,14 +1,46 @@
+passport {
+  .fixed {
+    padding-top: 45px;
+  }
+}
+
+.checkpoints {
+  padding-top: 4em;
+  text-align: center;
+
+  overflow: none;
+  @media #{ $large-up } {
+    width: upper-bound($medium-range);
+    margin: auto;
+  }
+      
+}
+
 checkpoint {
+  text-align: left;
   padding-left: 35px;
   position: relative;
   display: inline-block;
-  float: left;
+  float: center;
   background-color: $stable;
-  width: 30%;
   height: 45px;
   overflow: hidden;
   border: $dark 1px solid;
-  margin: 1%;
+
+  width: 48%;
+  margin: 0px 2px;
+  @media #{ $medium-up } {
+    width: 30%;
+  }
+
+  @media #{ $large-up } {
+    width: 22%;
+  }
+      
+}
+
+div.checkpoints {
+  clear: both;
 }
 
 checkpoint.visited {
@@ -19,7 +51,7 @@ checkpoint i {
   display: inline-block;
   position: absolute;
   font-size: 200%;
-  top: 8px;
+  top: -2px;
   left: 4px;
 }
 
