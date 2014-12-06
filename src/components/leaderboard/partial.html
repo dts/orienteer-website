@@ -2,8 +2,13 @@
   <div class="entry"
        ng-repeat="leader in leaderboard"
        >
-    <span class="placement">{{$index+1}}</span>
-    <img ng-src="{{leader.runner.avatar}}"></img>
-    <span class="name">{{ leader.runner.name }} ({{leader.visits_count}} cps, {{ leader.completion_time | elapsed_time }})</span>
+    <span class="placement">{{leader.place | ordinal}}</span>
+
+    <a ui-sref="logged-in.profile({ id: leader.runner.id , type:
+    leader.runner_type })">
+    <img ng-src="{{leader.runner.person.avatar}}"></img>
+    <div class="name">{{ leader.runner.person.name }}</div>
+    </a>
+    <div class="stats">{{leader.visits_count}} cps, {{ leader.completion_time | elapsed_time }}</div>
   </div>
 </div>
