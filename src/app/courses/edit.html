@@ -8,7 +8,14 @@
       <span class="switch round">
         <input id="switchToCreateCps" type="checkbox" ng-model="clickToCreate">
         <label for="switchToCreateCps"></label>
-      </span>
+    </span>
+
+    <label>Public course:
+    <span class="switch round">
+    <input id="publicSwitch" type="checkbox" ng-model="course.public">
+    <label for="publicSwitch"></label>
+    </span>
+
       </label>
       <div ng-if="focused = focusedCheckpoint()">
         <strong>Focused Checkpoint</strong>

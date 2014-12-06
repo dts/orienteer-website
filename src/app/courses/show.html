@@ -4,7 +4,8 @@
       <div class="item item-avatar">
         <img ng-src="{{ course.creator.person.avatar }}" />
         <h2>{{ course.name }}</h2>
-        <p>{{ course.creator.person.name }}</p>
+        <h5 class="subheader">{{ course.creator.person.name }}</h5>
+        <span ng-if="!(course.public)">(this course is not public)</span>
       </div>
     </div>
     <button ng-if="editable" class="button expand secondary"
