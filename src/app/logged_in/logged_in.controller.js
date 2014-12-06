@@ -1,6 +1,6 @@
 angular.module('orienteerio').controller(
   'LoggedInCtrl',
-  function($state,$scope) {
+  function($state,$scope,API) {
     $scope.state = $state;
     $scope.top_level_states = [
       { state : 'logged-in.dash',
@@ -8,7 +8,9 @@ angular.module('orienteerio').controller(
       { state : 'logged-in.create-course',
         name : 'New Course' },
       { state : 'logged-in.settings',
-        name : 'Settings' }
+        name : 'Settings' },
+      { state : 'logged-in.profile({ id : '+API.memberId()+' })',
+        name : 'Profile' }
     ];
 
     $scope.toggle_menu = function() {
