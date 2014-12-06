@@ -75,6 +75,10 @@ angular.module('orienteerio').controller(
         );
       }
     }
+
+    $scope.back = function() {
+      $state.go('logged-in.course.show',{ id : course.id });
+    }
     
     $scope.save = function() {
       LeafletCheckpointHelpers.fromLeaflet(
