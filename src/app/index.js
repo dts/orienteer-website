@@ -5,7 +5,7 @@ angular.module(
   ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 
    'ui.router','orienteer.services','orienteer.controllers','orienteer.directives',
    'blueimp.fileupload','orienteerFilters','leaflet-directive',
-   'exceptionOverride','restangular'])
+   'exceptionOverride','restangular','ordinal'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('login', {
