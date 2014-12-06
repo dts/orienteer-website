@@ -1,0 +1,33 @@
+
+.leaderboard {
+  .entry {
+    position: relative;
+    height: 70px;
+        
+    .placement {
+      position: absolute;
+      font-size: 1.3em;
+      top: 14px;  
+    }
+    img {
+      position: absolute;
+      display: block;
+      left: 3em;
+      top: 5px;
+      @include rounded(5px)
+    }
+    .name {
+      position: absolute;
+      display: block;
+      left: 110px;
+      top: 7px;
+    }
+    .stats {
+      position: absolute;
+      display: block;
+      left: 110px;
+      top: 25px;
+      color: #444;
+    }      
+  }
+}
