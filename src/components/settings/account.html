@@ -15,6 +15,24 @@
   </div>
   </div>
   </label>
+
+
+  <label>Change Password
+  <input type="password" ng-model="newPassword"></input>
+  </label>
+  <div ng-if="newPassword.length" class="fade">
+    <label>Confirmation new password
+    <input type="password" ng-model="newPasswordConfirmation"></input>
+    </label>
+    <label>Verify current password
+    <input type="password" ng-model="existingPassword"></input>
+    </label>
+    {{ changePasswordStatus }}
+    <button class="button expand" ng-click="changePassword()">Change Password</button>
+  </div>
+
+
+  
   <label>Avatar
   <input type="file"></input>
   <img ng-src="{{person.avatar}}"></img>

@@ -39,6 +39,20 @@ angular.module('orienteerio')
       );
     }
 
+    $scope.changePassword = function() {
+      $scope.changePasswordStatus = "";
+      if(this.$parent.newPassword != this.newPasswordConfirmation) {
+        $scope.changePasswordStatus = "New passwords do not match";
+        return;
+      }
+      if($scope.newPassword.length == 0) {
+        $scope.changePasswordStatus = "No password specified?"
+        return;
+      }
+      debugger;
+      API.changePassword(this.existingPassword,$scope.newPassword);
+    }
+
     $scope.clearError = function() {
       this.$parent.show_error = false;
     }
