@@ -1,6 +1,35 @@
 @import '../../bower_components/foundation/scss/foundation';
 @import "mixins";
 
+.course-edit {
+  position: fixed;
+  top: 45px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 100%;
+      
+  .controls {
+    position: absolute;
+    left: 0px;
+    right: 230px;
+    bottom: 0px;
+    top: 0px;
+    overflow: scroll;
+  }
+  .map {
+    position: absolute;
+    left: 400px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+  }
+}
+
+.row {
+  max-width: 100%;
+}
+     
 .front-page-jumbotron {
   & , & h1 {
     font-weight: 500;
