@@ -79,8 +79,17 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
     .pipe($.size());
 });
 
+gulp.task('bower_dist',function() {
+  return gulp.src(
+    ['bower_components/leaflet/dist/images/**/*',
+     'bower_components/Leaflet.awesome-markers/dist/images/**/*'])
+    .pipe(gulp.dest('dist/styles/images'))
+    .pipe($.size());
+});
+
 gulp.task('images', function () {
-  return gulp.src('src/assets/images/**/*')
+  return gulp.src([
+    'src/assets/images/**/*'])
     .pipe($.cache($.imagemin({
       optimizationLevel: 3,
       progressive: true,
@@ -108,4 +117,4 @@ gulp.task('clean', function (done) {
   $.del(['.tmp', 'dist'], done);
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'misc']);
+gulp.task('build', ['html', 'images', 'fonts', 'misc','bower_dist']);
