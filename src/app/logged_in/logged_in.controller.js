@@ -12,9 +12,12 @@ angular.module('orienteerio').controller(
       { state : 'logged-in.settings',
         name : 'Settings' }
     ];
-
+    $scope.close = function() {
+      $('.off-canvas-wrap').foundation('offcanvas','hide','move-right');
+    };
+    
     $scope.toggle_menu = function() {
       $('.off-canvas-wrap').foundation('offcanvas','toggle','move-right');
-    }
+    };
   }
 );

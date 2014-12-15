@@ -37,7 +37,7 @@
     <li><label>Settings</label></li>
     <li ng-repeat="s in top_level_states"
     ng-class="{ active : (state.current.name===s.state) }"><a
-    ui-sref="{{ s.state }}">{{s.name}}</a></li>
+    ui-sref="{{ s.state }}" ng-click="toggle_menu()">{{s.name}}</a></li>
   </ul>
   </div>
   </aside>
