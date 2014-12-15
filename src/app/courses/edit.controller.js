@@ -29,7 +29,7 @@ angular.module('orienteerio').controller(
       memberId : loggedInMemberId,
     });
     $scope.bounds = (courseBoundsConverter)(course);
-    $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints);
+    $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints,{draggable:true});
     
     $scope.$on('leafletDirectiveMap.click',function(event,args) {
       if($scope.clickToCreate) {
