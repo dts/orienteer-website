@@ -96,6 +96,18 @@
   opacity: 0;
 }
 
+@media #{ $small-only } {
+  body > div {
+    height: 100%;
+    & > div {
+      height: 100%;
+      & > div {
+        height: 100%;
+      }
+    }
+  }
+}
+  
 .main-container {
   margin-top: 45px;
   position: relative;
@@ -105,7 +117,6 @@
   @media #{ $small-only } {
     &> div {
       position: absolute;
-      background-color: red;
       top: 0px;
       left: 0px;
       right: 0px;
