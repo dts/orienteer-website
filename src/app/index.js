@@ -1,5 +1,6 @@
 'use strict';
 
+var API_URI = "http://api.orienteer.io/api/";
 angular.module(
   'orienteerio',
   ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 
@@ -90,7 +91,7 @@ angular.module('orienteer.services',[]);
 angular.module('orienteer.controllers',[]);
 angular.module('orienteer.directives',[]);
 // ugly hack to make jQuery work and strict mode stfu.
-angular.module('orienteerio').factory('ApiUri',function() { return "http://api.orienteer.io/api/"; });
+angular.module('orienteerio').factory('ApiUri',function() { return API_URI; });
 angular.module('orienteerio').factory('$',function($window) { return $window.$; });
 angular.module('orienteerio').factory('_',function($window) { return $window._; });
 angular.module('orienteerio').factory('alert',function($window) { return $window.alert; });
