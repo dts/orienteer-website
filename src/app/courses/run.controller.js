@@ -2,14 +2,37 @@
 
 angular.module('orienteerio').controller(
   'CourseRunCtrl',
-  function($scope,$rootScope,$state,course,RunCheckpoints,$stateParams,Geolocation,$timeout) {
+  function($scope,$rootScope,$state,course,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API) {
     $scope.geolocation_supported = !!Geolocation;
 
     $scope.course = course;
-    $scope.checkpoints = RunCheckpoints.query({ course_id : course.id , run : true});
+    $scope.checkpoints = RunCheckpoints.query({ course_id : course.id , run : true},cps_downloaded);
     $scope.checking_in = false;
     $scope.message = null;
 
+    var saved;
+    try { saved = locallyFetch(course); }
+    catch(x) { console.log("Error loading backed-up course: ",x); }
+
+    function cps_downloaded() {
+
+      if(saved) {
+        var savedCheckpoints = saved.checkpoints;
+        var savedCourse = saved.course;
+
+        if(savedCourse.id == $scope.course.id) {
+          _.each(
+            $scope.checkpoints,function(cp) {
+              var saved_cp = _.find(savedCheckpoints,function(saved_cp) { return saved_cp.id == cp.id; });
+              
+              // upgrade to visited if saved:
+              cp.visited = cp.visited || saved_cp.visited;
+            }
+          );
+        }
+      }
+    }
+    
     function recalculate_distances() {
       _.each(
         $scope.checkpoints,
@@ -56,7 +79,20 @@ angular.module('orienteerio').controller(
       }
     }
 
+    function locallyStore(course,checkpoints) {
+      var id = "currentRun_"+API.token()+"_"+course.id;
+      var hash = { course : course , checkpoints : checkpoints };
+      localStorage.setItem(id,JSON.stringify(hash));
+    }
+
+    function locallyFetch(course) {
+      var id = "currentRun_"+API.token()+"_"+course.id;
+      return JSON.parse(localStorage.getItem(id));
+    }
+    
     function save_progress() {
+      locallyStore($scope.course,$scope.checkpoints);
+      
       _.each($scope.checkpoints,function(cp) {
                if(cp.needs_saving) {
                  cp.saving = true;
