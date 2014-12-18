@@ -7,8 +7,10 @@ LINK=/www/sites/$SITE/current
 
 echo "buidling...."
 gulp build
+echo "copying old code to save upload time..."
+ssh deploy@orienteer-1.orienteer.io "cp -r $LINK $DIR"
 echo "uploading..."
-rsync -rv dist/* deploy@$HOST:$DIR
+rsync -rv --delete dist/* deploy@$HOST:$DIR
 echo "launching..."
 ssh deploy@orienteer-1.orienteer.io "rm $LINK ; ln -s $DIR $LINK"
 
