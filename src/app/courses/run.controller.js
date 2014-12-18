@@ -2,7 +2,7 @@
 
 angular.module('orienteerio').controller(
   'CourseRunCtrl',
-  function($scope,$rootScope,$state,course,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API) {
+  function($scope,$rootScope,$state,course,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API,$http) {
     $scope.geolocation_supported = !!Geolocation;
 
     $scope.course = course;
@@ -15,7 +15,6 @@ angular.module('orienteerio').controller(
     catch(x) { console.log("Error loading backed-up course: ",x); }
 
     function cps_downloaded() {
-
       if(saved) {
         var savedCheckpoints = saved.checkpoints;
         var savedCourse = saved.course;
@@ -79,6 +78,11 @@ angular.module('orienteerio').controller(
       }
     }
 
+    function locallyStop() {
+      var id = "currentRun_"+API.token()+"_"+course.id;
+      localStorage.removeItem(id);
+    }
+    
     function locallyStore(course,checkpoints) {
       var id = "currentRun_"+API.token()+"_"+course.id;
       var hash = { course : course , checkpoints : checkpoints };
@@ -124,6 +128,37 @@ angular.module('orienteerio').controller(
         ret += "uploading ";
       return ret;
     };
+
+    $scope.stop = function(confirmed) {
+      if(confirmed) {
+        $scope.stopping = true;
+        $scope.stopping_error = null;
+
+        $http({
+          method: 'POST',
+          url: API.url('run_checkpoints/finish'),
+          data: {
+            course_id : course.id
+          }
+        }).then(
+          function(success) {
+            locallyStop();
+            
+            $scope.stopping = false;
+            $scope.stopping_error = null;
+
+            $("#end-modal").foundation('reveal','close');
+            $state.go('logged-in.course.show',{ id : course.id });
+          },
+          function(error) {
+            $scope.stopping = false;
+            $scope.stopping_error = "Error occurred while ending :(";
+          }
+        );
+      } else {
+        $('#end-modal').foundation('reveal','open');
+      }
+    }
 
     $scope.check_in = function() {
       if($scope.checking_in) return;

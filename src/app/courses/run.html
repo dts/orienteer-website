@@ -33,4 +33,22 @@
   </checkpoint>
   </div>
 </passport>
+
+<div id="end-modal" class="reveal-modal" data-reveal>
+  <h4>End Run?</h4>
+  <p>Are you sure you want to end this run?</p>
+  <a class="close-reveal-modal">&#215;</a>
+  <p ng-if="stopping_error">{{stopping_error}}</p>
+  <button class="button alert" ng-click="stop(true);">
+    Yup, end it.
+    <i class="ion-looping" ng-if="stopping"></i>
+  </button>
+</div>
+
 <br/>
+
+    <div class="medium-centered small-12 medium-6 large-4 columns">
+<button ng-if="geolocation_supported" class="button alert button-full expand" ng-click="stop()">
+    End Run
+</button>
+<div>

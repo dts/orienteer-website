@@ -4,7 +4,9 @@
       <div class="item item-avatar">
         <img ng-src="{{ course.creator.person.avatar }}" />
         <h2>{{ course.name }}</h2>
-        <h5 class="subheader">{{ course.creator.person.name }}</h5>
+        <a  ui-sref="logged-in.profile({ id : course.creator.id })">
+          <h5 class="subheader">{{ course.creator.person.name }}</h5>
+        </a>
         <span ng-if="!(course.public)">(this course is not public)</span>
       </div>
     </div>
