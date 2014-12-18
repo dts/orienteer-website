@@ -44,7 +44,6 @@ angular.module('orienteerio').controller(
 
     $scope.focusedCheckpoint = function() {
       var ret = _.find($scope.checkpoints,function(cp) { return cp.focus; });
-      console.log('Focused checkpoing? ',ret);
       return ret;
     };
     $scope.deleteFocused = function() {
@@ -87,12 +86,14 @@ angular.module('orienteerio').controller(
       
       course.save().then(
         function() {
-          checkpoints.save().then(
-            function() {
+          checkpoints.save({ 'course_id' : $stateParams.id }).then(
+            function(dled_cps) {
+              checkpoints = dled_cps;
+              
               $scope.checkpoints = [];
               
               $timeout(function() {
-                $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints);
+                $scope.checkpoints = LeafletCheckpointHelpers.toLeaflet(checkpoints,{draggable:true});
               },100);
             },
             function() {
