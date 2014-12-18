@@ -44,7 +44,10 @@
 
 
   <div class="main-container">
-    <div ui-view />
+    <div ng-controller="ErrorCtrl" ng-include="'components/error/error.html'"></div>
+    <div ng-if="!error.fullPageError">
+      <div ui-view />
+    </div>
   </div>
 
 </div>

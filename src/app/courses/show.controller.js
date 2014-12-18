@@ -2,12 +2,17 @@
 /*jshint -W069 */
 angular.module('orienteerio').controller(
   'CourseShowCtrl',
-  function($state,course,$scope,$stateParams,leaderboard,
+  function($state,course,$scope,$rootScope,$stateParams,leaderboard,
            courseBoundsConverter,checkpoints,API,
            caltopoPrintConverter,loggedInMemberId,LeafletLayers,
            LeafletCheckpointHelpers,$
           )
   {
+    if(course.error || checkpoints.error || leaderboard.error) {
+      $rootScope.error.not_found();
+      return;
+    }
+    
     angular.extend($scope, {
       bounds: {},
       center: {},

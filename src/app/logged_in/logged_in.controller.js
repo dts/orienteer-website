@@ -1,6 +1,6 @@
 angular.module('orienteerio').controller(
   'LoggedInCtrl',
-  function($state,$scope,API) {
+  function($state,$scope,API,$rootScope) {
     $scope.state = $state;
     $scope.top_level_states = [
       { state : 'logged-in.dash',
