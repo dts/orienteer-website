@@ -1,6 +1,8 @@
 'use strict';
 
 var API_URI = "http://api.orienteer.io/api/";
+// alert('using localhost API'); API_URI = "http://localhost:3003/api/";
+
 angular.module(
   'orienteerio',
   ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 
@@ -8,6 +10,11 @@ angular.module(
    'blueimp.fileupload','orienteerFilters','leaflet-directive',
    'exceptionOverride','restangular','ordinal'])
   .config(function ($stateProvider, $urlRouterProvider) {
+    function passErrorPromise(promise) {
+      return promise.then(function(success) { return success; },
+                          function(error) { return { error : error }; });
+    }
+    
     $stateProvider
       .state('login', {
         url: '/',
@@ -50,14 +57,11 @@ angular.module(
         url: '/course/:id',
         template: '<ui-view ></ui-view>',
         resolve : {
-          leaderboard : function($stateParams,Leaderboard) {
-            return Leaderboard.get({ id : $stateParams.id }).$promise;
-          },
           checkpoints : function($stateParams,Checkpoints) {
-            return Checkpoints.getList({ 'course_id' : $stateParams.id });
+            return passErrorPromise(Checkpoints.getList({ 'course_id' : $stateParams.id })).then(function(blah) { return blah; });
           },
           course : function($stateParams,Courses) {
-            return Courses.one($stateParams.id).get();
+            return passErrorPromise(Courses.one($stateParams.id).get()).then(function(blah) { return blah; });
           }
         }
       })
@@ -65,6 +69,11 @@ angular.module(
         templateUrl: 'app/courses/show.html',
         controller: 'CourseShowCtrl',
         url: '/show',
+        resolve: {
+          leaderboard : function($stateParams,Leaderboard) {
+            return passErrorPromise(Leaderboard.get({ id : $stateParams.id }).$promise);
+          }
+        }
       })
       .state('logged-in.course.edit',{
         url: '/edit',
