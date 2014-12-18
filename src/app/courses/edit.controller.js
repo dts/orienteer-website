@@ -2,7 +2,7 @@
 
 angular.module('orienteerio').controller(
   'CourseEditCtrl',
-  function($state,course,$scope,$stateParams,leaderboard,
+  function($state,course,$scope,$stateParams,
            courseBoundsConverter,checkpoints,API,LeafletLayers,
            leafletMarkersHelpers,LeafletCheckpointHelpers,
            CheckpointIcons,$timeout,
@@ -24,7 +24,6 @@ angular.module('orienteerio').controller(
           logic: 'emit'
         }
       },
-      leaderboard : leaderboard,
       course : course,
       memberId : loggedInMemberId,
     });
