@@ -43,6 +43,19 @@ gulp.task('partials', function () {
     .pipe($.size());
 });
 
+gulp.task('manifest', ['html'] , function(){
+  gulp.src(['dist/**/*'])
+    .pipe($.manifest({
+      hash: true,
+      preferOnline: false,
+      timestamp: false,
+      network: ['http://*', 'https://*', '*'],
+      filename: 'manifest.appcache',
+      exclude: 'manifest.appcache'
+     }))
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('html', ['styles', 'scripts', 'partials'], function () {
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
@@ -117,4 +130,4 @@ gulp.task('clean', function (done) {
   $.del(['.tmp', 'dist'], done);
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'misc','bower_dist']);
+gulp.task('build', ['html', 'images', 'fonts', 'misc','bower_dist','manifest']);
