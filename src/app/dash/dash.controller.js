@@ -2,7 +2,7 @@
 
 angular.module('orienteerio').controller(
   'DashCtrl',
-  function($scope,Courses,_,leafletBoundsHelpers,LeafletLayers) {
+  function($scope,Courses,_,leafletBoundsHelpers,LeafletLayers,$timeout) {
     $scope.markers = [];
     $scope.layers = { baselayers: LeafletLayers };
     $scope.bounds = {};
@@ -32,6 +32,8 @@ angular.module('orienteerio').controller(
     
     var last_bounds;
     $scope.$watch('bounds',function() {
+      if($scope.fetching) return;
+      
       var b = $scope.bounds;
       var sw = b.southWest;
       var ne = b.northEast;
@@ -80,6 +82,7 @@ angular.module('orienteerio').controller(
                    message: course.name };
         }
       );
+
       if(updateBoundsForResults)
         $scope.bounds = leafletBoundsHelpers.createBoundsFromArray([[n,e],[s,w]]);
     }
@@ -94,9 +97,12 @@ angular.module('orienteerio').controller(
         function(courses) {
           if(newCoursePromise != p) return;
           
-          $scope.fetching = false;
           $scope.courses = courses;
           update_markers();
+
+          // delay the fetching-false thing until things have settled,
+          // including bounds on the map.
+          $timeout(function() { $scope.fetching = false; },400);
         },
         function(error) {
           if(newCoursePromise != p) return;
