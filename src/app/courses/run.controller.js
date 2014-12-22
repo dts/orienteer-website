@@ -6,16 +6,39 @@ angular.module('orienteerio').controller(
     $scope.geolocation_supported = !!Geolocation;
 
     $scope.course = course;
-    $scope.checkpoints = RunCheckpoints.query({ course_id : course.id , run : true},cps_downloaded);
+    $scope.checkpoints = RunCheckpoints.query({ course_id : course.id , run : true},cps_downloaded,cpsNotDownloaded);
     $scope.checking_in = false;
     $scope.message = null;
 
+    function error(mac) {
+      console.error(mac);
+    }
+    
     var saved;
-    try { saved = locallyFetch(course); }
+    try { saved = locallyFetch($state.params.id); }
     catch(x) { console.log("Error loading backed-up course: ",x); }
 
+    function cpsNotDownloaded() {
+      $scope.checkpoints = null;
+      both_things();
+    }
+    
     function cps_downloaded() {
-      if(saved) {
+      both_things();
+    }
+
+    function both_things() {
+      if(!$scope.checkpoints) {
+        if(!saved) {
+          error("No checkpoints, no saved");
+        } else {
+          $scope.checkpoints = [];
+
+          $scope.checkpoints = saved.checkpoints;
+          $scope.course = saved.course;
+        }
+        // $scope.checkpoints 
+      } else if(saved) {
         var savedCheckpoints = saved.checkpoints;
         var savedCourse = saved.course;
 
@@ -25,10 +48,15 @@ angular.module('orienteerio').controller(
               var saved_cp = _.find(savedCheckpoints,function(saved_cp) { return saved_cp.id == cp.id; });
               
               // upgrade to visited if saved:
-              cp.visited = cp.visited || saved_cp.visited;
+              if(!cp.visited && saved_cp.visited) {
+                cp.visited = true;
+                cp.needs_saving = true;
+              }
             }
           );
         }
+      } else {
+        locallyStore($scope.course,$scope.checkpoints);
       }
     }
     
@@ -89,8 +117,8 @@ angular.module('orienteerio').controller(
       localStorage.setItem(id,JSON.stringify(hash));
     }
 
-    function locallyFetch(course) {
-      var id = "currentRun_"+API.token()+"_"+course.id;
+    function locallyFetch(course_id) {
+      var id = "currentRun_"+API.token()+"_"+course_id;
       return JSON.parse(localStorage.getItem(id));
     }
     
@@ -102,7 +130,13 @@ angular.module('orienteerio').controller(
                  cp.saving = true;
                  cp.upload_error = null;
 
-                 cp.$save().then(
+                 $http(
+                   {
+                     method: 'POST',
+                     url: API.url('run_checkpoints'),
+                     data: cp
+                   }
+                 ).then(
                    function() {
                      cp.saving = false;
                      cp.needs_saving = false;
@@ -171,32 +205,40 @@ angular.module('orienteerio').controller(
       .then(
         function(position) {
           $scope.position = position;
-          
-          recalculate_distances();
-          var closest = closest_cp();
-          
-          if(closest.distance < 0.03) {
-            if(closest.visited) {
-              $scope.message = "You have already visited "+closest.name;
-              $scope.message_type = "calm";
-            } else {
-              closest.visited = true;
-              closest.needs_saving = true;
 
-              $scope.message = "You visited "+closest.name;
-              $scope.message_type = "balanced";
-            }
-            
-            save_progress();
-          } else {
-            $scope.message = "No dice.  You are "+humanize_distance(closest.distance)+" away.";
-            $scope.message_type = "energized";
-          }
-          
-          update_network_messaging();
           $timeout(clear_messages,8000);
-          
           $scope.checking_in = false;
+          
+          try {
+            recalculate_distances();
+            var closest = closest_cp();
+            
+            if(closest) {
+              if(closest.distance < 100) {
+                if(closest.visited) {
+                  $scope.message = "You have already visited "+closest.name;
+                  $scope.message_type = "calm";
+                } else {
+                  closest.visited = true;
+                  closest.needs_saving = true;
+
+                  $scope.message = "You visited "+closest.name;
+                  $scope.message_type = "balanced";
+                }
+                
+                save_progress();
+              } else {
+                $scope.message = "No dice.  You are "+humanize_distance(closest.distance)+" away.";
+                $scope.message_type = "energized";
+              }
+            } else {
+              $scope.message = "An error occured, try again?"
+              $scope.message_type = "energized";
+            }
+          } catch(x) {
+            console.error("Error occurred during checkin.",x);
+          }
+          update_network_messaging();
         },
         function(error) {
           $scope.position_error = error;
