@@ -1,6 +1,8 @@
 angular.module('orienteerio').controller(
   'ErrorCtrl',
   function($scope,$rootScope) {
+    $scope.flashes = [];
+
     function reset() {
       $scope.fullPageError = false;
       $scope.message = null;
@@ -14,7 +16,16 @@ angular.module('orienteerio').controller(
       }
     );
 
+    $scope.flash = function(type,message) {
+      $scope.flashes.push( { classes : type , message : message } );
+    }
+
     reset();
+    
+    $scope.close_flash = function(flash) {
+      var index = $scope.flashes.indexOf(flash);
+      $scope.flashes.splice(index,1);
+    }
     
     $scope.not_found = function() {
       $scope.fullPageError = true;
