@@ -42,9 +42,9 @@
   </div>
   </aside>
 
-
   <div class="main-container">
-    <div ng-controller="ErrorCtrl" ng-include="'components/error/error.html'"></div>
+    <div class="error-ctrl"  ng-controller="ErrorCtrl" ng-include="'components/error/error.html'">
+    </div>
     <div ng-if="!error.fullPageError">
       <div ui-view />
     </div>

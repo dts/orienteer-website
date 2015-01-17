@@ -126,7 +126,14 @@
   }
 }
 
-
+.flashes {
+  div,button {
+    z-index: 1000;
+    margin-bottom: 0;
+    padding: 12px;
+    border-bottom: #111 solid 1px;
+  }
+}
       
       
 @import "courses";
@@ -134,3 +141,5 @@
 @import "passport";
 @import "leaderboard";
 @import "pretty_bg";
+@import "errors";
+

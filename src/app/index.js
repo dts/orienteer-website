@@ -1,7 +1,7 @@
 'use strict';
 
 var API_URI = "http://api.orienteer.io/api/";
-// alert('using localhost API'); API_URI = "http://localhost:3003/api/";
+// /* alert('using localhost API'); */ API_URI = "http://localhost:3003/api/";
 
 angular.module(
   'orienteerio',
@@ -108,6 +108,12 @@ angular.module('orienteerio').factory('localStorage',function($window) { return 
 angular.module('orienteerio').factory('navigator',function($window) { return $window.navigator; });
 angular.module('exceptionOverride', []).factory('$exceptionHandler', function() {
   return function(exception, cause) {
-    console.error(exception,cause);
+    try {
+      window.Flash.exception(exception);
+    } catch(x) {
+      console.error(exception,cause);
+      trackJs.track(x);
+    }
+    trackJs.track(exception);
   };
 });

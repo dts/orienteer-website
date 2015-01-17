@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" ng-app="orienteerio" manifest="manifest.appcache">
   <head>
+    <script type="text/javascript" src="//d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js" data-token="6da780cd014b4547a09cab0afc610852"></script>
     <meta charset="utf-8">
     <title>Orienteer.io</title>
     <meta name="description" content="">
@@ -9,8 +10,6 @@
 
     <!-- build:css({.tmp,src}) styles/vendor.css -->
     <link rel="stylesheet" href="app/vendor.css">
-
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
 
     <!-- bower:css -->
     <link rel="stylesheet" href="../bower_components/leaflet/dist/leaflet.css" />
@@ -81,8 +80,11 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,src}) scripts/app.js -->
+
     <script src="app/index.js"></script>
+
     <script src="app/filters.js"></script>
+    <script src="components/flash/flash.js"></script>
     <script src="app/main/main.controller.js"></script>
     <script src="app/dash/dash.controller.js"></script>
 <script src="app/courses/show.controller.js"></script>
@@ -100,7 +102,9 @@
     <script src="components/authentication/external_auth.controller.js"></script>
     <script src="components/settings/account.controller.js"></script>
 
+
     <script src="common/js/services/api.js"></script>
+        <script src="common/js/services/cache.js"></script>
 <script src="common/js/services/leaflet_layers.js"></script>
     <script src="common/js/filters/ordinal.js"></script>
     <script src="common/js/services/authorize.js"></script>
