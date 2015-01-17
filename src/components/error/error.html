@@ -1,3 +1,11 @@
+<div class="flashes">
+  <button ng-repeat="flash in flashes"
+       class="expand button" ng-class="flash.classes"
+       ng-click="close_flash(flash)"
+       >
+    {{ flash.message }}
+  </button>
+</div>
 <div ng-if="fullPageError" class="error-page">
   <h2>{{message}}</h2>
   <h4 class="subhead">{{message_sub}}</h2>
