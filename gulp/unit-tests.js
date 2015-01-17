@@ -15,17 +15,18 @@ gulp.task('test', function() {
   });
 
   var testFiles = bowerDeps.js.concat([
-    'src/{app,components}/**/*.js',
+    'src/{app,components,common}/**/*.js',
     'test/unit/**/*.js'
   ]);
 
   return gulp.src(testFiles)
     .pipe($.karma({
       configFile: 'test/karma.conf.js',
-      action: 'run'
+      action: 'watch'
     }))
     .on('error', function(err) {
       // Make sure failed tests cause gulp to exit non-zero
-      throw err;
+      console.log("ERR: ",err,err.stack);
+  //    throw err;
     });
 });
