@@ -19,7 +19,7 @@
     <i class="ion-looping" ng-if="network_activity"></i>
     {{ network_message }}
   </div>
-  <div ng-if="network_message && network_error" class="button button-full button-calm ">
+  <div ng-if="network_error" class="button button-full button-calm ">
     <p>        <i class="ion-close-circled"></i>
       Error communicating with server - don't worry, we'll sort it out later</p>
   </div>

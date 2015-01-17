@@ -2,64 +2,29 @@
 
 angular.module('orienteerio').controller(
   'CourseRunCtrl',
-  function($scope,$rootScope,$state,course,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API,$http) {
-    $scope.geolocation_supported = !!Geolocation;
+  function($scope,$rootScope,$state,Courses,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API,$http,Flash) {
+    $scope.geolocation_supported = Geolocation.supported;
+    
+    function error(mac) {
+      Flash.error(mac);
+    }
 
-    $scope.course = course;
-    $scope.checkpoints = RunCheckpoints.query({ course_id : course.id , run : true},cps_downloaded,cpsNotDownloaded);
+    Courses.one($stateParams.id).get().then(function(c) { $scope.course = c; },function(c) { $scope.course = null; });
+    
+    var courseId = $stateParams.id;
+
+    RunCheckpoints.getList({ course_id : courseId , run : true})
+      .then(function(cps) {
+        $scope.checkpoints = cps;
+      },function(err) {
+        $scope.checkpoints = null;
+        $scope.message = "Error loading checkpoints"
+      }
+           );
+
     $scope.checking_in = false;
     $scope.message = null;
 
-    function error(mac) {
-      console.error(mac);
-    }
-    
-    var saved;
-    try { saved = locallyFetch($state.params.id); }
-    catch(x) { console.log("Error loading backed-up course: ",x); }
-
-    function cpsNotDownloaded() {
-      $scope.checkpoints = null;
-      both_things();
-    }
-    
-    function cps_downloaded() {
-      both_things();
-    }
-
-    function both_things() {
-      if(!$scope.checkpoints) {
-        if(!saved) {
-          error("No checkpoints, no saved");
-        } else {
-          $scope.checkpoints = [];
-
-          $scope.checkpoints = saved.checkpoints;
-          $scope.course = saved.course;
-        }
-        // $scope.checkpoints 
-      } else if(saved) {
-        var savedCheckpoints = saved.checkpoints;
-        var savedCourse = saved.course;
-
-        if(savedCourse.id == $scope.course.id) {
-          _.each(
-            $scope.checkpoints,function(cp) {
-              var saved_cp = _.find(savedCheckpoints,function(saved_cp) { return saved_cp.id == cp.id; });
-              
-              // upgrade to visited if saved:
-              if(!cp.visited && saved_cp.visited) {
-                cp.visited = true;
-                cp.needs_saving = true;
-              }
-            }
-          );
-        }
-      } else {
-        locallyStore($scope.course,$scope.checkpoints);
-      }
-    }
-    
     function recalculate_distances() {
       _.each(
         $scope.checkpoints,
@@ -92,66 +57,49 @@ angular.module('orienteerio').controller(
     }
 
     function update_network_messaging() {
-      var total_saving = _.filter($scope.checkpoints,function(cp) { return cp.saving; }).length;
-      var total_errors = _.filter($scope.checkpoints,function(cp) { return cp.upload_error; }).length;
+      $scope.network_message = "";
+      $scope.network_error = false;
 
-      if(total_saving || total_errors) {
-        $scope.network_activity = true;
-        $scope.network_error = !!total_errors;
-        $scope.network_message = "Saving "+total_saving+" visits.";
-      } else {
-        $scope.network_message = null;
-        $scope.network_error = false;
-        $scope.network_activity = false;
+      if($scope.saving) {
+        $scope.network_message = "Saving progress...";
       }
-    }
-
-    function locallyStop() {
-      var id = "currentRun_"+API.token()+"_"+course.id;
-      localStorage.removeItem(id);
-    }
-    
-    function locallyStore(course,checkpoints) {
-      var id = "currentRun_"+API.token()+"_"+course.id;
-      var hash = { course : course , checkpoints : checkpoints };
-      localStorage.setItem(id,JSON.stringify(hash));
-    }
-
-    function locallyFetch(course_id) {
-      var id = "currentRun_"+API.token()+"_"+course_id;
-      return JSON.parse(localStorage.getItem(id));
+      if($scope.saving_error) {
+        $scope.network_error = true;
+      }
     }
     
     function save_progress() {
-      locallyStore($scope.course,$scope.checkpoints);
-      
-      _.each($scope.checkpoints,function(cp) {
-               if(cp.needs_saving) {
-                 cp.saving = true;
-                 cp.upload_error = null;
+//      locallyStore($scope.course,$scope.checkpoints);
+      if($scope.saving) {
+        error("Already saving...");
+        return;
+      }
 
-                 $http(
-                   {
-                     method: 'POST',
-                     url: API.url('run_checkpoints'),
-                     data: cp
-                   }
-                 ).then(
-                   function() {
-                     cp.saving = false;
-                     cp.needs_saving = false;
-                     update_network_messaging();
-                   },
-                   function(x) {
-                     cp.saving = false;
-                     cp.upload_error = x;
-                     update_network_messaging();
-                   }
-                 );
-               }
-             });
+      $scope.saving = true;
       
+      try {
+      $scope.checkpoints.customPOST(
+        this,
+        '',
+        { course_id : courseId},
+        {}
+      ).then(
+        function() {
+          $scope.saving = false;
+          update_network_messaging();
+        },
+        function(x) {
+          $scope.saving = false;
+          $scope.saving_error = x;
+          update_network_messaging();
+        }
+      );
+
       update_network_messaging();
+      } catch(x) {
+        $scope.saving = false;
+        throw x;
+      }
     }
 
     $scope.cp_class = function(cp) {
@@ -172,7 +120,7 @@ angular.module('orienteerio').controller(
           method: 'POST',
           url: API.url('run_checkpoints/finish'),
           data: {
-            course_id : course.id
+            course_id : courseId
           }
         }).then(
           function(success) {
@@ -182,7 +130,7 @@ angular.module('orienteerio').controller(
             $scope.stopping_error = null;
 
             $("#end-modal").foundation('reveal','close');
-            $state.go('logged-in.course.show',{ id : course.id });
+            $state.go('logged-in.course.show',{ id : courseId });
           },
           function(error) {
             $scope.stopping = false;
@@ -200,7 +148,7 @@ angular.module('orienteerio').controller(
       $scope.position_error = null;
       $scope.checking_in = true;
       clear_messages();
-
+      
       Geolocation.getAccuratePosition()
       .then(
         function(position) {
@@ -213,8 +161,10 @@ angular.module('orienteerio').controller(
             recalculate_distances();
             var closest = closest_cp();
             
+            debugger;
+
             if(closest) {
-              if(closest.distance < 100) {
+              if(closest.distance < 0.04) {
                 if(closest.visited) {
                   $scope.message = "You have already visited "+closest.name;
                   $scope.message_type = "calm";
@@ -226,7 +176,6 @@ angular.module('orienteerio').controller(
                   $scope.message_type = "balanced";
                 }
                 
-                save_progress();
               } else {
                 $scope.message = "No dice.  You are "+humanize_distance(closest.distance)+" away.";
                 $scope.message_type = "energized";
@@ -235,14 +184,18 @@ angular.module('orienteerio').controller(
               $scope.message = "An error occured, try again?"
               $scope.message_type = "energized";
             }
+
+            save_progress();
           } catch(x) {
-            console.error("Error occurred during checkin.",x);
+            Flash.exception(x,"Error occurred during checkin.");
           }
           update_network_messaging();
         },
         function(error) {
           $scope.position_error = error;
           $scope.checking_in = false;
+          
+          save_progress();
         });
 
     };
