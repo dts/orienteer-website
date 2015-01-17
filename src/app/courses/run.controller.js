@@ -161,8 +161,6 @@ angular.module('orienteerio').controller(
             recalculate_distances();
             var closest = closest_cp();
             
-            debugger;
-
             if(closest) {
               if(closest.distance < 0.04) {
                 if(closest.visited) {
