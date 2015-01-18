@@ -29,7 +29,7 @@ angular.module('orienteerio').controller(
       _.each(
         $scope.checkpoints,
         function(cp) {
-          cp.distance = Geolocation.kmBetween(cp,$scope.position.coords);
+          cp.distance = Geolocation.kmBetween(cp,$scope.position);
         });
     }
 
