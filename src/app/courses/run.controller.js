@@ -111,6 +111,10 @@ angular.module('orienteerio').controller(
       return ret;
     };
 
+    function locallyStop() {
+      $scope.checkpoints.invalidate();
+    }
+    
     $scope.stop = function(confirmed) {
       if(confirmed) {
         $scope.stopping = true;
@@ -168,12 +172,15 @@ angular.module('orienteerio').controller(
                   $scope.message_type = "calm";
                 } else {
                   closest.visited = true;
+                  
                   closest.needs_saving = true;
 
                   $scope.message = "You visited "+closest.name;
                   $scope.message_type = "balanced";
                 }
-                
+
+                closest.visits = closest.visits || [];
+                closest.visits.push( new Date().toUTCString() )
               } else {
                 $scope.message = "No dice.  You are "+humanize_distance(closest.distance)+" away.";
                 $scope.message_type = "energized";

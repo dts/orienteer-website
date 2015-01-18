@@ -22,11 +22,12 @@ checkpoint {
   position: relative;
   display: inline-block;
   float: center;
+  overflow: hidden;
   background-color: $stable;
   height: 45px;
   overflow: hidden;
   border: $dark 1px solid;
-
+  
   width: 48%;
   margin: 0px 2px;
   @media #{ $medium-up } {
@@ -36,7 +37,16 @@ checkpoint {
   @media #{ $large-up } {
     width: 22%;
   }
+
+  .name { font-weight: bold; }
+  .description {
+    
+  }
       
+  p {
+    padding-top: 0.7em;
+    line-height: 100%;
+  }
 }
 
 div.checkpoints {
@@ -55,10 +65,6 @@ checkpoint i {
   left: 4px;
 }
 
-div p {
-  padding-top: 0.7em;
-  line-height: 100%;
-}
 
 .locating {
   padding-top: 4em;

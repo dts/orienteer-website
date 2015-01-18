@@ -6,6 +6,15 @@ function pad(n, width, z) {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
+  function limit_digits(string,num) {
+    var m = string.match(/^(.*?)\.(.*?)$/);
+    if(!m) return string;
+
+    var whole = m[1];
+    var digits = m[2]
+
+    return whole+"."+digits.substring(0,num)    
+  }
 angular.module('orienteerFilters',[]).filter(
   'elapsed_time',function() {
     return function(seconds) {
@@ -13,8 +22,10 @@ angular.module('orienteerFilters',[]).filter(
       seconds -= hours*60*60;
       var minutes = Math.floor(seconds / 60);
       seconds -= minutes*60;
-      if(hours) { return hours+':'+pad(minutes,2)+':'+pad(seconds,2); }
-      return pad(minutes,2)+':'+pad(seconds,2);
+      var padded_secs = limit_digits(pad(seconds,2),1);
+      var padded_mins = pad(minutes,2)
+      if(hours) { return hours+':'+padded_mins+':'+padded_secs; }
+      return padded_mins+':'+padded_secs;
     };
   }
 );

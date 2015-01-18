@@ -29,7 +29,10 @@
   <checkpoint ng-repeat="cp in checkpoints" ng-class="cp_class(cp)" >
     <i class="ion-ios7-checkmark-outline" ng-if="cp.visited"></i>
     <i class="ion-ios7-circle-outline" ng-if="!cp.visited"></i>
-    {{ cp.name }}
+    <p>
+      <span class="name">{{ cp.name }}</span>
+      <span class="description">{{ cp.description }}</span>
+    </p>
   </checkpoint>
   </div>
 </passport>
