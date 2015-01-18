@@ -4,6 +4,7 @@ angular.module('orienteerio').controller(
   'DashCtrl',
   function($scope,Courses,_,leafletBoundsHelpers,LeafletLayers,$timeout) {
     $scope.markers = [];
+    $scope.defaults = { scrollWheelZoom : false };
     $scope.layers = { baselayers: LeafletLayers };
     $scope.bounds = {};
     $scope.center = {};

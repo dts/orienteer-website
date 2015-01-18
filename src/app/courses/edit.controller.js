@@ -12,7 +12,7 @@ angular.module('orienteerio').controller(
       loaded : false,
       bounds: {},
       center: {},
-      defaults: {
+      mapDefaults: {
         scrollWheelZoom: false
       },
       layers:  {
