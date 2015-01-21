@@ -2,7 +2,7 @@
 
 angular.module('orienteerio').controller(
   'DashCtrl',
-  function($scope,Courses,_,leafletBoundsHelpers,LeafletLayers,$timeout) {
+  function($scope,Courses,_,leafletBoundsHelpers,LeafletLayers,$timeout,Geolocation) {
     $scope.markers = [];
     $scope.defaults = { scrollWheelZoom : false };
     $scope.layers = { baselayers: LeafletLayers };
@@ -32,12 +32,16 @@ angular.module('orienteerio').controller(
     }
     
     var last_bounds;
+    var skipBoundsUpdates = true;
+    
     $scope.$watch('bounds',function() {
-      if($scope.fetching) return;
+      if($scope.fetching || skipBoundsUpdates) return;
       
       var b = $scope.bounds;
       var sw = b.southWest;
       var ne = b.northEast;
+
+      if(!sw || !ne) return;
       
       var search_hash = {
         bounds : {
@@ -56,6 +60,8 @@ angular.module('orienteerio').controller(
     });
 
     var updateBoundsForResults = false;
+    var firstRequest = true;
+    
     function update_markers() {
       var n,e,s,w;
       
@@ -88,6 +94,10 @@ angular.module('orienteerio').controller(
         $scope.bounds = leafletBoundsHelpers.createBoundsFromArray([[n,e],[s,w]]);
     }
 
+    function getWithLocation(location) {
+      getNewCourses({ near: location.latitude+","+location.longitude+"" });
+    }
+
     var newCoursePromise = null;
     function getNewCourses(hash) {
       $scope.fetching = true;
@@ -97,7 +107,11 @@ angular.module('orienteerio').controller(
       newCoursePromise.then(
         function(courses) {
           if(newCoursePromise != p) return;
-          
+          if(courses.length == 0 && Geolocation.supported) {
+            Geolocation.getPosition().then(getWithLocation);
+          }
+
+          firstRequest = false;
           $scope.courses = courses;
           update_markers();
 
@@ -107,7 +121,8 @@ angular.module('orienteerio').controller(
         },
         function(error) {
           if(newCoursePromise != p) return;
-          
+
+          firstRequest = false;
           $scope.fetching = false;
           $scope.error = error;
         }
@@ -115,6 +130,20 @@ angular.module('orienteerio').controller(
     };
 
     updateBoundsForResults = true;
-    getNewCourses({ near : "request_location" });
+    firstRequest = true;
+    
+    function getWithRequestLocation() {
+      getNewCourses({ near : "request_location" });
+    };
+    
+    if(Geolocation.supported && Geolocation.active) {
+      Geolocation.getPosition().then(
+        getWithLocation,
+        getWithRequestLocation
+      ).then(function() { skipBoundsUpdates = false; });
+    } else {
+      getWithRequestLocation();
+    }
+
   }
 );
