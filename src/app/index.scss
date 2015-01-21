@@ -97,11 +97,11 @@
 }
 
 @media #{ $small-only } {
-  body > div {
+  body > div.ng-scope {
     height: 100%;
-    & > div {
+    & > div.ng-scope {
       height: 100%;
-      & > div {
+      & > div.inner-wrap {
         height: 100%;
       }
     }
