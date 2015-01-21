@@ -106,6 +106,7 @@ angular.module('orienteerio').factory('_',function($window) { return $window._; 
 angular.module('orienteerio').factory('alert',function($window) { return $window.alert; });
 angular.module('orienteerio').factory('localStorage',function($window) { return $window.localStorage; });
 angular.module('orienteerio').factory('navigator',function($window) { return $window.navigator; });
+angular.module('orienteerio').factory('trackJs',function($window) { return $window.trackJs; });
 angular.module('exceptionOverride', []).factory('$exceptionHandler', function() {
   return function(exception, cause) {
     try {
