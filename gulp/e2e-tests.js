@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var SSH = require('node-sshclient');
 
 var $ = require('gulp-load-plugins')();
 
@@ -16,6 +17,11 @@ gulp.task('protractor-only', ['webdriver-update', 'wiredep'], function (done) {
     'test/e2e/**/*.js'
   ];
 
+  // set up the testing API server:
+  var ssh = new SSH.SSH( { hostname : 'orienteer-1.orienteer.io' , user : 'deploy' , port : 22 } );
+
+  ssh.command('~/test-server',['start'],function(res) {
+    console.log("RES: ",res);
   gulp.src(testFiles)
     .pipe($.protractor.protractor({
       configFile: 'test/protractor.conf.js',
@@ -27,8 +33,12 @@ gulp.task('protractor-only', ['webdriver-update', 'wiredep'], function (done) {
     .on('end', function () {
       // Close browser sync server
       browserSync.exit();
-      done();
+      ssh.command("~/test-server",['stop'],function(res) {
+        console.log("DRES: ",res);
+        done();
+      });
     });
+  });
 });
 
 gulp.task('protractor', ['serve:e2e', 'protractor-only']);
