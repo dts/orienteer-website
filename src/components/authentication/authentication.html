@@ -22,7 +22,7 @@
   <label>Email
     <input ng-class="dataErrors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
     </label>
-    <small class="error" ng-if="dataErrors.username">{{ dataErrors.Username }}</small>
+    <small class="error" ng-if="dataErrors.username">{{ dataErrors.username }}</small>
     <label>Password
       <input ng-class="dataErrors.password?'error':''" type="password" placeholder="idunno24" ng-model="data.password">
     </label>
@@ -49,7 +49,7 @@
     </div>
     <div ng-if="!signingUp">
       {{ status }}
-      <button type="submit" class="button expand" ng-click="logIn()">You know what to do.</button>
-      <button class="button secondary expand" ng-click="showSignUp()">I'd like to sign up!</button>
+      <button type="submit" class="button expand" ng-click="logIn()">Log In</button>
+      <button class="button secondary expand" ng-click="showSignUp()">Sign Up!</button>
     </div>
 </form>
