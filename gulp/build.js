@@ -27,6 +27,29 @@ gulp.task('scripts', function () {
     .pipe($.size());
 });
 
+gulp.task('markdown',function() {
+  return gulp.src('src/help/**/*.md')
+    .pipe($.markdown())
+    .pipe(gulp.dest('.tmp/help/'))
+});
+
+gulp.task('help-partials',['markdown'],function() {
+  return gulp.src('.tmp/help/**/*.html')
+    .pipe($.minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true
+    }))
+    .pipe($.ngHtml2js({
+      moduleName: 'orienteerio',
+      declareModule: false,
+      stripPrefix: '.tmp/',
+      prefix: 'help/'
+    }))
+    .pipe(gulp.dest('.tmp/help/'))
+    .pipe($.size());
+});
+
 gulp.task('partials', function () {
   return gulp.src('src/{app,components,common}/**/*.html')
     .pipe($.minifyHtml({
@@ -56,14 +79,14 @@ gulp.task('manifest', ['html'] , function(){
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('html', ['styles', 'scripts', 'partials'], function () {
+gulp.task('html', ['styles', 'scripts', 'partials','help-partials'], function () {
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
   var assets;
 
   return gulp.src('src/index.html')
-    .pipe($.inject(gulp.src('{src,.tmp}/{app,components,common,lib}/**/*.js',{read:false}), {
+    .pipe($.inject(gulp.src('{src,.tmp}/{app,components,common,lib,help}/**/*.js',{read:false}), {
       read: false,
       starttag: '<!-- inject:partials -->',
       addRootSlash: false,

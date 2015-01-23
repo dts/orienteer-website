@@ -32,11 +32,15 @@
   </div>
 
 
-  
-  <label>Avatar
-  <input type="file"></input>
-  <img ng-src="{{person.avatar}}"></img>
-  </label>
+  <div class="row">
+    <div class="small-2 columns"><img ng-src="{{person.avatar}}"></img></div>
+    <div class="small-10 columns">
+      <p>This is your avatar, provided
+        by <a href="http://gravatar.com/">Gravatar</a>.  If you're
+        interested in changing it, visit your <a href='http://en.gravatar.com/emails/'>gravatar profile page</a>
+      </p>
+    </div>
+  </div>
 <div ng-if="show_error" class="alert-box alert radius fade">
 {{ error }}
   <a ng-click="clearError();">&times;</a>

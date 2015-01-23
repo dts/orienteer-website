@@ -9,6 +9,8 @@ angular.module('orienteerio').controller(
         name : 'Profile' },
       { state : 'logged-in.create-course',
         name : 'New Course' },
+      { state : 'logged-in.help',
+        name : 'Help' },
       { state : 'logged-in.settings',
         name : 'Settings' }
     ];
@@ -18,6 +20,11 @@ angular.module('orienteerio').controller(
     
     $scope.toggle_menu = function() {
       $('.off-canvas-wrap').foundation('offcanvas','toggle','move-right');
+    };
+
+    $scope.help = function(topic) {
+      $scope.help_url = "help/"+topic+".html";
+      $('#help-modal').foundation('reveal','open');
     };
   }
 );

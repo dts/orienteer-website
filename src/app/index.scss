@@ -36,9 +36,9 @@
     color: white;
     text-shadow: rgba(0,0,0,0.498) 1px 1px 0px;
   }
-  @media #{$medium-up} {
-    padding: 4em;
-  }
+
+  padding: 4em;
+
   h1 > .name {
     display: inline-block;
     position: relative;
@@ -99,7 +99,7 @@
 @media #{ $small-only } {
   body > div.ng-scope {
     height: 100%;
-    & > div.ng-scope {
+    & > div.off-canvas-wrap {
       height: 100%;
       & > div.inner-wrap {
         height: 100%;
@@ -142,4 +142,4 @@
 @import "leaderboard";
 @import "pretty_bg";
 @import "errors";
-
+@import "help";

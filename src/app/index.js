@@ -91,6 +91,18 @@ angular.module(
         templateUrl: 'app/settings/settings.html',
         controller: 'SettingsCtrl'
       })
+
+      .state('logged-in.help',{
+        url: '/help',
+        templateUrl: 'app/help/help.html',
+        controller: 'HelpCtrl'
+      })
+
+      .state('logged-in.help-section',{
+        url: '/help/:section',
+        templateUrl: 'app/help/help.html',
+        controller: 'HelpCtrl'
+      })
     ;
 
     $urlRouterProvider.otherwise('/');
