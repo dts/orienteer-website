@@ -2,7 +2,27 @@
 
 angular.module('orienteerio').controller(
   'CourseRunCtrl',
-  function($scope,$rootScope,$state,Courses,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API,$http,Flash) {
+  function($scope,$rootScope,$state,Courses,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API,$http,Flash,LeafletLayers,LeafletCheckpointHelpers) {
+
+    angular.extend($scope, {
+      loaded : false,
+      bounds: {},
+      center: {},
+      defaults: {
+        scrollWheelZoom: false
+      },
+      layers:  {
+        baselayers: LeafletLayers
+      },
+      events : {
+        map : {
+          enable : ['click','popupopen'],
+          logic: 'emit'
+        }
+      },
+    });
+
+    
     $scope.geolocation_supported = Geolocation.supported;
     
     function error(mac) {
@@ -16,6 +36,9 @@ angular.module('orienteerio').controller(
     RunCheckpoints.getList({ course_id : courseId , run : true})
       .then(function(cps) {
         $scope.checkpoints = cps;
+        $scope.map_checkpoints = LeafletCheckpointHelpers.toLeaflet(cps);
+        $scope.bounds = LeafletCheckpointHelpers.boundsForCheckpoints(cps);
+        $scope.loaded = true;
       },function(err) {
         $scope.checkpoints = null;
         $scope.message = "Error loading checkpoints"
@@ -79,12 +102,14 @@ angular.module('orienteerio').controller(
 
       try {
       var r = $scope.checkpoints.customPOST(
-        this,
+        $scope.checkpoints,
         '',
-        { course_id : courseId},
+        { course_id : courseId },
         {}
       ).then(
-        function() {
+        function(blah) {
+          $scope.checkpoints = blah;
+          
           $scope.saving = false;
           update_network_messaging();
         },

@@ -1,11 +1,11 @@
-passport {
-  .fixed {
-    margin-top: 45px;
+.checkpoints
+{
+  padding-top: 1em;
+  @media #{ $medium-up }
+  {
+    padding-top: 4em;
   }
-}
 
-.checkpoints {
-  padding-top: 4em;
   text-align: center;
 
   overflow: none;
@@ -31,11 +31,7 @@ checkpoint {
   width: 48%;
   margin: 0px 2px;
   @media #{ $medium-up } {
-    width: 30%;
-  }
-
-  @media #{ $large-up } {
-    width: 22%;
+    width: 90%;
   }
 
   .name { font-weight: bold; }

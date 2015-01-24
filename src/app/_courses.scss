@@ -1,6 +1,6 @@
 $course-edit-controls-width: 220px;
 
-.course-edit 
+.course-edit
 {
   @include split_view_parent;
   
@@ -51,3 +51,46 @@ $course-edit-controls-width: 220px;
     left: 5px;
   }
 }
+
+$run-controls-width: 375px;
+
+.course-run {
+  @include split_view_parent;
+  @media #{ $small-only }
+  {
+    top: 90px;
+  }
+
+  .controls
+  {
+    @include scrolls-y;
+    @include split_view_left($run-controls-width);
+  }
+  .map {
+    @include split_view_right($run-controls-width);
+  }
+    
+}
+
+.run-container {
+ position: relative;
+ }
+
+.run-top-controls {
+
+  top: 0px;
+  left: 0px;
+  @media #{ $small-only }
+  {
+    position: absolute;
+  right: 0px;
+  }
+  @media #{ $medium-up }
+  {
+  
+    width: $run-controls-width;
+  }
+}
+
+
+          
