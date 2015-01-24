@@ -1,29 +1,32 @@
-<div class="course-edit">
+<div class="course-edit" ng-class="{ 'right-visible' : show_right }">
+  <a class="button show-right" ng-click="show_right = true">Map</a>
+  <a class="button show-left" ng-click="show_right = false">Show list</a>
+
   <div class="controls">
     <form>
       <label>Course Name
         <input type="text" placeholder="Inputs and other form elements go inside..." ng-model="course.name">
       </label>
       <label>Click to create CPs:
-      <span class="switch round">
-        <input id="switchToCreateCps" type="checkbox" ng-model="clickToCreate">
-        <label for="switchToCreateCps"></label>
-    </span>
-
-    <label>Public course:
-    <span class="switch round">
-    <input id="publicSwitch" type="checkbox" ng-model="course.public">
-    <label for="publicSwitch"></label>
-    </span>
+        <span class="switch round">
+          <input id="switchToCreateCps" type="checkbox" ng-model="clickToCreate">
+          <label for="switchToCreateCps"></label>
+        </span>
+      </label>
+      <label>Public course:
+        <span class="switch round">
+          <input id="publicSwitch" type="checkbox" ng-model="course.public">
+          <label for="publicSwitch"></label>
+        </span>
 
       </label>
       <div ng-if="focused = focusedCheckpoint()">
         <strong>Focused Checkpoint</strong>
         <label>Checkpoint name
-        <input type="text" ng-model="focused.message">
+          <input type="text" ng-model="focused.message">
         </label>
         <label>Checkpoint description
-        <input type="text" ng-model="focused.description">
+          <input type="text" ng-model="focused.description">
         </label>
         <button class="button expand alert" 
                 ng-if="!focused.removed"
@@ -39,25 +42,25 @@
       
     </form>
     <br/>
-      <button class="button expand" ng-click="save()">Save</button>
-      <button class="button expand alert"
-      ng-click="remove()">Delete</button>
-              <button class="button expand"
-                      ng-click="back()">Done</button>
-              <a class="help" ng-click="help('course_edit')">Help me!</a>
+    <button class="button expand" ng-click="save()">Save</button>
+    <button class="button expand alert"
+            ng-click="remove()">Delete</button>
+    <button class="button expand"
+            ng-click="back()">Done</button>
+    <a class="help" ng-click="help('course_edit')">Help me!</a>
   </div>
   <div class="map">
     <leaflet class="full-image"
              defaults="mapDefaults"
-                 layers="layers"
-                 markers="checkpoints"
-                 event-broadcast="events"
-                 bounds="bounds"
-                 center="center"
+             layers="layers"
+             markers="checkpoints"
+             event-broadcast="events"
+             bounds="bounds"
+             center="center"
              width="100%"
              scalecontrol
-                 height="100%">
-        </leaflet>
+             height="100%">
+    </leaflet>
   </div>
 
 </div>

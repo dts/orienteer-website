@@ -1,6 +1,9 @@
-<div class="row">
-  <div class="large-4 columns">
-    <div class="card">
+<div class="course-show big-map-container" ng-class="{ 'right-visible' : show_right }">
+  <a class="button show-right" ng-click="show_right = true">Map</a>
+  <a class="button show-left" ng-click="show_right = false">Show list</a>
+
+  <div class="controls">
+    <div class="course card">
       <div class="item item-avatar">
         <img ng-src="{{ course.creator.person.avatar }}" />
         <h2>{{ course.name }}</h2>
@@ -14,30 +17,30 @@
             ng-click="edit()">Edit</button>
     <div class="row">
       <div class="small-6 columns"><a class="button small expand" ng-click="print()">Print using
-    CalTopo</a></div>
-    <div class="small-6 columns"><a class="button small expand"
-    ng-click="run()">Run</a></div>
+          CalTopo</a></div>
+      <div class="small-6 columns"><a class="button small expand"
+                                      ng-click="run()">Run</a></div>
     </div>
     <a class="help" ng-click="help('course_show');">Help me!</a>
-  </div>
-  <div class="large-4 columns">
-    <leaflet class="full-image"
-             defaults="defaults"
-                 markers="checkpoints"
-                 bounds="bounds"
-                 center="center"
-                 width="100%"
-             layers="layers"
-             scalecontrol
-                 height="400px">
-        </leaflet>
-  </div>
-
-  <div class="large-4 columns">
+    <hr/>
     <h3>Leaderboard</h3>
     <div ng-include src="'components/leaderboard/partial.html'"></div>
+
+  </div>
+  <div class="map">
+    <leaflet class="full-image"
+             defaults="defaults"
+             markers="checkpoints"
+             bounds="bounds"
+             center="center"
+             width="100%"
+             layers="layers"
+             scalecontrol
+             height="100%">
+    </leaflet>
   </div>
   <form class="printit" target="_blank" action="http://caltopo.com/print" method="POST">
     <input type="hidden" name="state">
   </form>
+
 </div>

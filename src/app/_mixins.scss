@@ -1,8 +1,14 @@
+$topbar_height: 45px;
 
 @mixin rounded($radius: 0.5em) {
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
   border-radius: $radius;
+}
+
+@mixin avatar() {
+  border: 1px solid #AAAAAA;
+  @include rounded();
 }
 
 @mixin ionicon {
@@ -12,6 +18,106 @@
   font-variant: normal;
   text-transform: none;
   text-rendering: auto;
+}
+
+@mixin split_view_parent {
+  -webkit-transition-property: -webkit-transform;
+  -webkit-transition-duration: 400ms;
+  
+  &.right-visible {
+    -webkit-transform-origin: center;
+    -webkit-transform: translate(-50%,0);
+  }
+  
+  position: fixed;
+  top: $topbar_height;
+  left: 0px;
+  bottom: 0px;
+
+  .show-right , .show-left {
+    display: none;
+    position: absolute;
+    bottom: 0px;
+    z-index: 1001;
+  }
+
+  .show-right {
+    right: 50%;
+    width: 10em;
+
+    &:after {
+      position: absolute;
+      right: 1em;
+      @include ionicon;
+      content: "\f125";
+    }
+  }
+
+  .show-left {
+    left: 50%;
+    width: 10em;
+
+    &:before {
+      position: absolute;
+      left: 1em;
+      @include ionicon;
+      content: "\f124";
+    }
+  }  
+  
+  @media #{ $small-only }
+  {
+    right: -100%;
+    .show-right,.show-left {
+      display: block;
+    }
+  }
+  
+  @media #{ $medium-up }
+  {
+    right: 0px;
+  }
+}
+
+$default_split_view_left_width: 300px;
+
+@mixin split_view_left($left_width: $default_split_view_left_width) {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+
+  @media #{ $small-only }
+  {
+    width: 50%;
+  }
+  
+  @media #{ $medium-up }
+  {
+    width: $left_width;
+  }
+}
+
+@mixin split_view_right($left_width: $default_split_view_left_width) {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+
+  @media #{ $small-only }
+  {
+    left: 50%;
+  }
+  
+  @media #{ $medium-up }
+  {
+    left: $left_width;
+  }
+}
+
+@mixin scrolls-y {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 // colors:

@@ -33,3 +33,19 @@ Checkpoints can be moved by dragging them.
 
 To name and describe a checkpoint, click on it in the map and edit the
 name and description in the left-hand side.
+
+#### Map zooming
+
+Scrolling to zoom has been disabled because it caused the map to
+behave erratically on some platforms.  Pinch to zoom works (on
+tablets), double-click to zoom in, shift-double-click to zoom out, use
+the zoom controls, or finally shift-drag to define a bounds area that
+you can zoom in to.
+
+#### Why can't I edit the map on my phone?
+
+Such a small screen doesn't really work very efficiently at creating a
+course.  Creating a course can be challenging business!  If this is a
+crucial feature for you, or you want to be able to create courses by
+physically visiting locations, let us know and we can start to work
+that feature in!

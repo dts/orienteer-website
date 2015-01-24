@@ -14,7 +14,7 @@
       display: block;
       left: 3em;
       top: 5px;
-      @include rounded(5px)
+      @include avatar;    
     }
     .name {
       position: absolute;

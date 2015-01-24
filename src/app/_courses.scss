@@ -1,3 +1,19 @@
+$course-edit-controls-width: 220px;
+
+.course-edit 
+{
+  @include split_view_parent;
+  
+  .controls
+  {
+    @include scrolls-y;
+    @include split_view_left($course-edit-controls-width);
+  }
+  .map {
+    @include split_view_right($course-edit-controls-width);
+  }   
+}
+    
 .course-list {
   .item {
     display: block;
@@ -23,3 +39,15 @@
   }
 }
 
+.course.card {
+  position: relative;
+  padding-left: 90px;
+  img {
+    @include avatar;  
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 10px;
+    left: 5px;
+  }
+}

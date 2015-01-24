@@ -68,7 +68,7 @@ angular.module('orienteerio').controller(
       }
     }
     
-    function save_progress() {
+    window.save_progress = function save_progress() {
 //      locallyStore($scope.course,$scope.checkpoints);
       if($scope.saving) {
         error("Already saving...");
@@ -76,9 +76,9 @@ angular.module('orienteerio').controller(
       }
 
       $scope.saving = true;
-      
+
       try {
-      $scope.checkpoints.customPOST(
+      var r = $scope.checkpoints.customPOST(
         this,
         '',
         { course_id : courseId},
@@ -100,6 +100,8 @@ angular.module('orienteerio').controller(
         $scope.saving = false;
         throw x;
       }
+      
+      return r;
     }
 
     $scope.cp_class = function(cp) {
@@ -120,12 +122,14 @@ angular.module('orienteerio').controller(
         $scope.stopping = true;
         $scope.stopping_error = null;
 
-        $http({
+        save_progress().then(function() {
+        return $http({
           method: 'POST',
           url: API.url('run_checkpoints/finish'),
           data: {
             course_id : courseId
           }
+        });
         }).then(
           function(success) {
             locallyStop();
@@ -146,6 +150,7 @@ angular.module('orienteerio').controller(
       }
     }
 
+    window.run_scope = $scope;
     $scope.check_in = function() {
       if($scope.checking_in) return;
 

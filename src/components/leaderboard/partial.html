@@ -6,7 +6,7 @@
 
     <a ui-sref="logged-in.profile({ id: leader.runner.id , type:
     leader.runner_type })">
-    <img ng-src="{{leader.runner.person.avatar}}"></img>
+    <img ng-src="{{leader.runner.person.avatar}}&s=48"></img>
     <div class="name">{{ leader.runner.person.name }}</div>
     </a>
     <div class="stats">{{leader.visits_count}} cps, {{ leader.completion_time | elapsed_time }}</div>

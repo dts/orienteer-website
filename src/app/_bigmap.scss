@@ -1,0 +1,65 @@
+
+.big-map-container
+{
+  @include split_view_parent;
+  .controls
+  {
+    @include scrolls-y;
+    @include split_view_left;
+  }
+  .map {
+    @include split_view_right;
+  }   
+}
+
+
+/* @media #{ $medium-up } { */
+/*   .course-edit,.big-map-container { */
+/*     position: fixed; */
+/*     top: 45px; */
+/*     left: 0px; */
+/*     right: 0px; */
+/*     bottom: 0px; */
+      
+/*     .controls { */
+/*       display: block !important; */
+/*       position: absolute; */
+/*       left: 10px; */
+/*       width: 220px; */
+/*       bottom: 0px; */
+/*       top: 0px; */
+/*       overflow: scroll; */
+/*     } */
+/*     .map { */
+/*       display: block !important; */
+/*       position: absolute; */
+/*       left: 240px; */
+/*       right: 0px; */
+/*       bottom: 0px; */
+/*       top: 0px; */
+/*     } */
+/*   } */
+
+/*   .course-show.big-map-container , .dash.big-map-container { */
+/*     .controls { */
+/*       width: 400px !important; */
+/*     } */
+/*     .map { */
+/*       left: 420px !important; */
+/*     } */
+/*   } */
+/* } */
+
+/* .course-edit , .big-map-container{ */
+/*   .controls { display: block; } */
+/*   .map { display: none; } */
+/*   &.show-map { */
+/*     .controls { display: none; } */
+/*     .map { */
+/*       height: 100%; */
+/*       display: block; */
+/*     } */
+/*   } */
+
+/* } */
+
