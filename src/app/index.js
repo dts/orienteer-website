@@ -125,8 +125,12 @@ angular.module('exceptionOverride', []).factory('$exceptionHandler', function() 
       window.Flash.exception(exception);
     } catch(x) {
       console.error(exception,cause);
-      trackJs.track(x);
+      if(typeof trackJs != 'undefined')
+        window.trackJs.track(x);
     }
-    trackJs.track(exception);
+    if(typeof trackJs != 'undefined')
+      trackJs.track(exception);
+    else
+      console.error(exception);
   };
 });
