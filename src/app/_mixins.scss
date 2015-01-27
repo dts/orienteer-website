@@ -21,8 +21,13 @@ $topbar_height: 45px;
 }
 
 @mixin split_view_parent {
+  // For some reason the animation here is a huge fail:
   -webkit-transition-property: -webkit-transform;
   -webkit-transition-duration: 400ms;
+
+  .leaflet-control-container {
+    -webkit-transform: translate3d(0px,0px,0);
+  }
   
   &.right-visible {
     -webkit-transform-origin: center;
@@ -35,6 +40,8 @@ $topbar_height: 45px;
   bottom: 0px;
 
   .show-right , .show-left {
+    -webkit-transform: translate3d(0px,0px,0);
+    
     display: none;
     position: absolute;
     bottom: 0px;
