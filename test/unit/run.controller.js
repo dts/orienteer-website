@@ -6,6 +6,10 @@ describe('controllers',function()
     3 : { name : "New Course" }
   };
 
+  var trackJs = {
+    track : function(a) { console.log("Tracking: ",a); }
+  };
+
   var CHECKPOINTS = {
     3 : [
       { id : 8 , name : "CP3" , visited : false , latitude : 8 , longitude : 7 },
@@ -13,7 +17,7 @@ describe('controllers',function()
     ]
   };
 
-  var scope,course,checkpoints,httpBackend,Q,rootScope,timeout,geolocation,currentSetup;
+  var scope,course,checkpoints,httpBackend,Q,rootScope,timeout,geolocation,currentSetup,apiUri;
   beforeEach(module('orienteerio'));
 
   function getLocalStorage() {
@@ -61,19 +65,19 @@ describe('controllers',function()
     currentSetup = hash;
     if(hash.localStorage) setupLocalStorageOn();
     else setupLocalStorageOff();
-
-    rootScope.apiData = { token : TOKEN };
+    
+    rootScope.apiData = { token : TOKEN , memberId : 123456 , api_uri : apiUri };
 
     if(hash.network) {
       httpBackend.expect('GET','http://api.orienteer.io/api/courses/3')
         .respond(200,COURSES[3]);
 
-      httpBackend.expect('GET','http://api.orienteer.io/api/run_checkpoints?course_id=3&run=true')
+      httpBackend.expect('GET','http://api.orienteer.io/api/run_checkpoints?course_id=3&limit=1000&run=true')
         .respond(200,CHECKPOINTS[3]);
     } else {
       httpBackend.expect('GET','http://api.orienteer.io/api/courses/3')
         .respond(0,null,null,null);
-      httpBackend.expect('GET','http://api.orienteer.io/api/run_checkpoints?course_id=3&run=true')
+      httpBackend.expect('GET','http://api.orienteer.io/api/run_checkpoints?course_id=3&limit=1000&run=true')
         .respond(0,null,null,null);
     }
     
@@ -179,7 +183,7 @@ describe('controllers',function()
         },1);
       }
     }
-    inject(function($controller,Courses) {
+    inject(function($controller,Courses,ApiUri) {
       scope.$watch('checkpoints',function() {
         if(!('checkpoints' in scope)) return;
 
@@ -193,7 +197,9 @@ describe('controllers',function()
         maybe_done();
       });
 
-      $controller('CourseRunCtrl',{ $scope : scope , $stateParams : { id : 3 } , course : course, Geolocation : geolocation });
+      apiUri = ApiUri;
+
+      $controller('CourseRunCtrl',{ $scope : scope , $stateParams : { id : 3 } , course : course, Geolocation : geolocation , trackJs : trackJs });
       
       httpBackend.flush();
     });
