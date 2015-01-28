@@ -2,7 +2,7 @@
 
 angular.module('orienteerio').controller(
   'CourseRunCtrl',
-  function($scope,$rootScope,$state,Courses,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API,$http,Flash,LeafletLayers,LeafletCheckpointHelpers) {
+  function($scope,$rootScope,$state,Courses,RunCheckpoints,$stateParams,Geolocation,$timeout,localStorage,API,$http,Flash,LeafletLayers,LeafletCheckpointHelpers,CheckpointIcons) {
 
     angular.extend($scope, {
       loaded : false,
@@ -30,20 +30,36 @@ angular.module('orienteerio').controller(
     }
 
     Courses.one($stateParams.id).get().then(function(c) { $scope.course = c; },function(c) { $scope.course = null; });
+
+    window.update_map_cps = function update_map_cps() {
+      if(!$scope.checkpoints) return;
+      
+      $scope.map_checkpoints = LeafletCheckpointHelpers.toLeaflet(
+        $scope.checkpoints,
+        function(for_leaflet,checkpoint) {
+          if(checkpoint.visited)
+            for_leaflet.icon = CheckpointIcons.visited
+          return for_leaflet;
+        }
+      );
+    }
     
     var courseId = $stateParams.id;
 
     RunCheckpoints.getList({ course_id : courseId , run : true})
       .then(function(cps) {
         $scope.checkpoints = cps;
-        $scope.map_checkpoints = LeafletCheckpointHelpers.toLeaflet(cps);
+        update_map_cps();
+        
         $scope.bounds = LeafletCheckpointHelpers.boundsForCheckpoints(cps);
         $scope.loaded = true;
       },function(err) {
         $scope.checkpoints = null;
         $scope.message = "Error loading checkpoints"
       }
-           );
+           ).then(function() {
+
+           });
 
     $scope.checking_in = false;
     $scope.message = null;
@@ -211,6 +227,9 @@ angular.module('orienteerio').controller(
 
                 closest.visits = closest.visits || [];
                 closest.visits.push( new Date().toUTCString() )
+
+                $scope.center.lat = Number(closest.latitude);
+                $scope.center.lng = Number(closest.longitude);
               } else {
                 $scope.message = "No dice.  You are "+humanize_distance(closest.distance)+" away.";
                 $scope.message_type = "energized";
@@ -220,6 +239,7 @@ angular.module('orienteerio').controller(
               $scope.message_type = "energized";
             }
 
+            update_map_cps();
             save_progress();
           } catch(x) {
             Flash.exception(x,"Error occurred during checkin.");
