@@ -135,7 +135,7 @@ describe('controllers',function()
     geolocation.getAccuratePosition.and.callFake(function() {
       var deferred = Q.defer();
 
-      deferred.resolve( { coords : latlng } );
+      deferred.resolve( latlng );
       
       return deferred.promise;
     });
@@ -149,13 +149,15 @@ describe('controllers',function()
             var returned = _.find(parsed,function(d) { return d.id == latlng.id; });
 
             expect(returned).toBeDefined();
+//            console.log("RETURNED: ",returned);
             if(returned) expect(returned.visited).toBe(true);
           }
-
-          if(currentSetup.network)
+          
+          if(currentSetup.network) {
             return [200,data];
-          else
+          } else {
             return [0,null,null];
+          }
         }
       );
     
@@ -177,7 +179,6 @@ describe('controllers',function()
       if(got_cps && got_course) {
         isDone = true;
         setTimeout(function() {
-
           deferred.resolve(scope);
           rootScope.$apply();
         },1);
@@ -208,7 +209,7 @@ describe('controllers',function()
   }
 
   function afterChecks() {
-    
+    expect(scope.checkpoints && scope.checkpoints.invalidate).toBeDefined();
   }
 
   function freshScope() {
@@ -366,13 +367,11 @@ describe('controllers',function()
            function() {
              expect(scope.checkpoints[1].visited).toBe(true);
              var ls = getLocalStorage();
-             
              expect(ls.d.run_checkpoints[3][1].visited).toBe(true);
            }
          ).then(afterChecks).then(done);
      }
     );
-  
 
 /*
   it('should load checkpoints from localStorage',
