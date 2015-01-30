@@ -7,7 +7,9 @@ describe('controllers',function()
   };
 
   var trackJs = {
-    track : function(a) { console.log("Tracking: ",a); }
+    track : function(a) { console.log("Tracking: ",a); },
+    attempt : function(a) { return a(); },
+    configure : function(a) {},
   };
 
   var CHECKPOINTS = {
@@ -65,7 +67,7 @@ describe('controllers',function()
     currentSetup = hash;
     if(hash.localStorage) setupLocalStorageOn();
     else setupLocalStorageOff();
-    
+
     rootScope.apiData = { token : TOKEN , memberId : 123456 , api_uri : apiUri };
 
     if(hash.network) {
@@ -149,7 +151,7 @@ describe('controllers',function()
             var returned = _.find(parsed,function(d) { return d.id == latlng.id; });
 
             expect(returned).toBeDefined();
-//            console.log("RETURNED: ",returned);
+            //            console.log("RETURNED: ",returned);
             if(returned) expect(returned.visited).toBe(true);
           }
           
@@ -216,16 +218,39 @@ describe('controllers',function()
     scope = rootScope.$new();
   }
 
-  beforeEach(inject(function($rootScope,$httpBackend,$q,Flash,$timeout,Geolocation) 
-                    {
-                      timeout = $timeout;
-                      window.Flash = Flash;
-                      rootScope = $rootScope;
-                      Q = $q;
-                      geolocation = Geolocation || {};
-    httpBackend = $httpBackend;
-                      freshScope();
-  }));
+  beforeEach(
+    function(done) {
+      try {
+      inject(
+        function($rootScope,$httpBackend,$q,$timeout,Geolocation) 
+        {
+          timeout = $timeout;
+          window.Flash = {
+            error : function() {
+              console.log("Error: ",arguments);
+            },
+            rootException : function() {
+              console.log("RootException: ",arguments);
+            },
+            exception : function() {
+              console.log("Exception",arguments);
+            }
+          };
+                           
+          rootScope = $rootScope;
+          Q = $q;
+          geolocation = Geolocation || {};
+          httpBackend = $httpBackend;
+          freshScope();
+          done();
+        }
+      );
+      } catch(x) {
+        console.log("WTF,",x);
+        done();
+      }
+    }
+  );
   
   // 
   // the behavior of the course run controller should be:
