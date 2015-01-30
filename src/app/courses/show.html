@@ -10,10 +10,10 @@
         <a  ui-sref="logged-in.profile({ id : course.creator.id })">
           <h5 class="subheader">{{ course.creator.person.name }}</h5>
         </a>
-        <span ng-if="!(course.public)">(this course is not public)</span>
+        <span ng-show="!(course.public)">(this course is not public)</span>
       </div>
     </div>
-    <button ng-if="editable" class="button expand secondary"
+    <button ng-show="editable" class="button expand secondary"
             ng-click="edit()">Edit</button>
     <div class="row">
       <div class="small-6 columns"><a class="button small expand" ng-click="print()">Print using

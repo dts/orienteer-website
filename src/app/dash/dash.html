@@ -5,7 +5,7 @@
   <div class="controls">
     <h3>Courses</h3>
 
-    <div ng-if="fetching" class="loading"><i class="icon ion-loading-c"></i></div>
+    <div ng-show="fetching" class="loading"><i class="icon ion-loading-c"></i></div>
     <ort-course-list courses="courses"></ort-course-list>
     <form id="fileupload" 
           data-url="http://api.orienteer.io/upload_gpx"
