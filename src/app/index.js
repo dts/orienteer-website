@@ -8,7 +8,7 @@ angular.module(
   ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 
    'ui.router','orienteer.services','orienteer.controllers','orienteer.directives',
    'blueimp.fileupload','orienteerFilters','leaflet-directive',
-   'exceptionOverride','restangular','ordinal'])
+   'exceptionOverride','restangular','ordinal','appcache'])
   .config(function ($stateProvider, $urlRouterProvider) {
 /*    */
     

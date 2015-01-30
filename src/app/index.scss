@@ -1,6 +1,49 @@
 @import '../../bower_components/foundation/scss/foundation';
 @import "mixins";
 
+.app-cache-ui {
+  padding-top: 3px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 1500;
+  background-color: $dark;
+  color: $light;
+  
+  .icon {
+    position: absolute;
+    vertical-align: center;
+    top: 0px;
+    bottom: 0px;
+    left: 5px;
+    width: 2em;
+    
+    line-height: 100%;
+    @include ionicon;
+    font-size: 200%;
+    font-weight: 70;
+    &:before {  
+      content: "\f26f";
+    }
+  }
+    
+  .content {
+    padding-left: 2.5em;
+  }
+  .buttons {
+    float: right;
+    padding-top: 3px;
+    padding-bottom: 8px;
+    margin-right: 5px;
+      
+    button {
+      padding: 10px;
+      margin-bottom: 0px;
+    }
+  }
+
+
+}
 
 .row {
   max-width: 100%;
