@@ -17,6 +17,7 @@ angular.module('orienteerio')
         initializedOpenFb = true;
       }
 
+        
       function fbLoginCallback(userData) {
         if(userData.status === 'connected') {
           // U R in!
@@ -32,6 +33,14 @@ angular.module('orienteerio')
         } else { 
           $scope.status = 'Facebook denied login: '+JSON.stringify(userData);
         }
+      }
+
+      var oauth_tmp = localStorage.getItem('oauth_cb_tmp');
+      localStorage.removeItem('oauth_cb_tmp');
+
+      if(oauth_tmp) {
+        $window.openFB.oauthCallback(oauth_tmp);
+        $window.openFB.getLoginStatus(fbLoginCallback);
       }
       
       $scope.useFacebook = function() {

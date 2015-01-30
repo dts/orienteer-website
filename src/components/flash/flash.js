@@ -8,7 +8,7 @@
         try {
           $rootScope.error.flash(type,message);
         } catch(x) {
-          console.error("flashing failed: ",x);
+          console.error("flashing failed: ",x.message);
         }
       }
       return window.Flash = {

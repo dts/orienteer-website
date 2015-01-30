@@ -1,8 +1,18 @@
 <html>
 <head>
-<script>
+  <script>
+    (function() {
+    try {
+    if(navigator.standalone) {
+localStorage.setItem('oauth_cb_tmp',window.location.href);
+window.location.pathname = '/';
+return;
+    }
+} catch(x) {
+}
     window.opener.openFB.oauthCallback(window.location.href);
-    window.close();
+window.close();
+})();
 </script>
 </head>
 <body>

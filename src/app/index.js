@@ -10,28 +10,30 @@ angular.module(
    'blueimp.fileupload','orienteerFilters','leaflet-directive',
    'exceptionOverride','restangular','ordinal'])
   .config(function ($stateProvider, $urlRouterProvider) {
+/*    */
+    
     function passErrorPromise(promise) {
       return promise.then(function(success) { return success; },
                           function(error) { return { error : error }; });
     }
     
     $stateProvider
-      .state('login', {
+      .state('start',{
         url: '/',
+        template: 'loading...'
+      })
+      .state('login', {
+        url: '/splash',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       })
       .state('logged-in',{
         resolve : {
           loggedInMemberId : function($rootScope,authCheck,$state,API) {
-            if(!authCheck()) {
-              $state.go('login');
-              return undefined;
-            } else {
-              var ret = API.memberId();
-              return ret;
-            }
+            var ret = API.memberId();
+            return ret;
           }
+
         },
         controller: 'LoggedInCtrl',
         templateUrl: 'app/logged_in/logged_in.html',
@@ -134,3 +136,40 @@ angular.module('exceptionOverride', []).factory('$exceptionHandler', function() 
       console.error(exception);
   };
 });
+
+angular.module('orienteerio').run(function($rootScope,$state,$location,authCheck) {
+  $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState,fromParams) {
+    localStorage.setItem('last_state',JSON.stringify({ name : toState.name , params : toParams }));
+  });
+  
+  $rootScope.$on("$stateChangeStart",function(e,toState,toParams,fromState,fromParams) {
+    if(toState.name === 'start') {
+      if(!authCheck()) {
+        e.preventDefault();
+        $state.go('login');
+        return;
+      }
+      // app is launching at the 'nowhere' state.  If we have a
+      // reasonable state to go to, go there.
+      var last_state = JSON.parse(localStorage.getItem('last_state'));
+      if(last_state && last_state.name) {
+        e.preventDefault();
+        $state.go(last_state.name,last_state.params);
+        return;
+      } else {
+        e.preventDefault();
+        $state.go('logged-in.dash');
+        return;
+      }
+    }
+    
+    var isLogin = toState.name === "login";
+    if(isLogin)
+      return;
+    
+    if(!authCheck()) {
+      e.preventDefault();
+      $state.go('login');
+    }
+  });
+})
