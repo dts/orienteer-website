@@ -108,6 +108,10 @@ angular.module(
     ;
 
     $urlRouterProvider.otherwise('/');
+
+    Foundation.global.namespace = '';
+    
+    $(document).foundation();
   })
 ;
 angular.module('orienteer.services',[]);
@@ -130,6 +134,7 @@ angular.module('exceptionOverride', []).factory('$exceptionHandler', function() 
       if(typeof trackJs != 'undefined')
         window.trackJs.track(x);
     }
+    
     if(typeof trackJs != 'undefined')
       trackJs.track(exception);
     else
@@ -140,6 +145,7 @@ angular.module('exceptionOverride', []).factory('$exceptionHandler', function() 
 angular.module('orienteerio').run(function($rootScope,$state,$location,authCheck) {
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState,fromParams) {
     localStorage.setItem('last_state',JSON.stringify({ name : toState.name , params : toParams }));
+    $(document).foundation('reflow');
   });
   
   $rootScope.$on("$stateChangeStart",function(e,toState,toParams,fromState,fromParams) {
@@ -173,3 +179,4 @@ angular.module('orienteerio').run(function($rootScope,$state,$location,authCheck
     }
   });
 })
+

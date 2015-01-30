@@ -22,21 +22,21 @@
   <label>Email
     <input ng-class="dataErrors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
     </label>
-    <small class="error" ng-if="dataErrors.username">{{ dataErrors.username }}</small>
+    <small class="error" ng-show="dataErrors.username">{{ dataErrors.username }}</small>
     <label>Password
       <input ng-class="dataErrors.password?'error':''" type="password" placeholder="idunno24" ng-model="data.password">
     </label>
-    <small class="error" ng-if="dataErrors.password">{{ dataErrors.password }}</small>
-    <div ng-if="signingUp" class="fade">
+    <small class="error" ng-show="dataErrors.password">{{ dataErrors.password }}</small>
+    <div ng-show="signingUp" class="fade">
       <p>Great!  Let us know what you'd like to call you, and we'll
       sort the rest out later!</p>
       <label>First Name
         <input ng-class="dataErrors.fname?'error':''" type="text" ng-model="data.fname">
       </label>
-      <small class="error" ng-if="dataErrors.fname">{{ dataErrors.fname }}</small>
+      <small class="error" ng-show="dataErrors.fname">{{ dataErrors.fname }}</small>
       <label>Last Name
         <input  ng-class="dataErrors.lname?'error':''" type="text" ng-model="data.lname">
-      <small class="error" ng-if="dataErrors.lname">{{ dataErrors.lname }}</small>
+      <small class="error" ng-show="dataErrors.lname">{{ dataErrors.lname }}</small>
       </label>
       {{ status }}
       <button type="submit" class="button expand"
@@ -47,7 +47,7 @@
         Nope.
       </button>
     </div>
-    <div ng-if="!signingUp">
+    <div ng-show="!signingUp">
       {{ status }}
       <button type="submit" class="button expand" ng-click="logIn()">Log In</button>
       <button class="button secondary expand" ng-click="showSignUp()">Sign Up!</button>

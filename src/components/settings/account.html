@@ -20,7 +20,7 @@
   <label>Change Password
   <input type="password" ng-model="newPassword"></input>
   </label>
-  <div ng-if="newPassword.length" class="fade">
+  <div ng-show="newPassword.length" class="fade">
     <label>Confirmation new password
     <input type="password" ng-model="newPasswordConfirmation"></input>
     </label>
@@ -41,12 +41,12 @@
       </p>
     </div>
   </div>
-<div ng-if="show_error" class="alert-box alert radius fade">
+<div ng-show="show_error" class="alert-box alert radius fade">
 {{ error }}
   <a ng-click="clearError();">&times;</a>
 </div>
   <button class="button expand" ng-click="save()">Save <i
-  ng-if="saving" class="icon ion-loading-b"></i></button>
+  ng-show="saving" class="icon ion-loading-b"></i></button>
 </div>
 </form>
 <button class="button button-secondary expand" ng-click="logout()">Log out</button>

@@ -9,8 +9,8 @@
     <passport>
       <div class="checkpoints">
         <checkpoint ng-repeat="cp in checkpoints" ng-class="cp_class(cp)" >
-          <i class="ion-ios7-checkmark-outline" ng-if="cp.visited"></i>
-          <i class="ion-ios7-circle-outline" ng-if="!cp.visited"></i>
+          <i class="ion-ios7-checkmark-outline" ng-show="cp.visited"></i>
+          <i class="ion-ios7-circle-outline" ng-show="!cp.visited"></i>
           <p>
             <span class="name">{{ cp.name }}</span>
             <span class="description">{{ cp.description }}</span>
@@ -23,17 +23,17 @@
       <h4>End Run?</h4>
       <p>Are you sure you want to end this run?</p>
       <a class="close-reveal-modal">&#215;</a>
-      <p ng-if="stopping_error">{{stopping_error}}</p>
+      <p ng-show="stopping_error">{{stopping_error}}</p>
       <button class="button alert" ng-click="stop(true);">
         Yup, end it.
-        <i class="ion-looping" ng-if="stopping"></i>
+        <i class="ion-looping" ng-show="stopping"></i>
       </button>
     </div>
 
     <br/>
 
     <div class="medium-centered small-12 medium-6 large-4 columns">
-      <button ng-if="geolocation_supported" class="button alert button-full expand" ng-click="stop()">
+      <button ng-show="geolocation_supported" class="button alert button-full expand" ng-click="stop()">
         End Run
       </button>
     </div>
@@ -53,26 +53,26 @@
 
 
 <div class="run-top-controls">
-  <div ng-if="!geolocation_supported" class="button button-full
+  <div ng-show="!geolocation_supported" class="button button-full
                                              expand button-assertive">
     Geolocation Not Supported
   </div>
   <div>
-    <button ng-if="geolocation_supported" class="button button-full expand button-positive" ng-click="check_in()">
+    <button ng-show="geolocation_supported" class="button button-full expand button-positive" ng-click="check_in()">
       Check In
-      <i ng-if="checking_in" class="ion-refreshing"></i>
+      <i ng-show="checking_in" class="ion-refreshing"></i>
     </button>
-    <div ng-if="position_error" class="button button-full button-assertive">
+    <div ng-show="position_error" class="button button-full button-assertive">
       {{ position_error }}
     </div>
-    <div ng-if="message" class="button button-full button-{{ message_type }}">
+    <div ng-show="message" class="button button-full button-{{ message_type }}">
       {{ message }}
     </div>
-    <div ng-if="network_message && !network_error" class="button button-full button-dark">
-      <i class="ion-looping" ng-if="network_activity"></i>
+    <div ng-show="network_message && !network_error" class="button button-full button-dark">
+      <i class="ion-looping" ng-show="network_activity"></i>
       {{ network_message }}
     </div>
-    <div ng-if="network_error" class="button button-full button-calm ">
+    <div ng-show="network_error" class="button button-full button-calm ">
       <p>        <i class="ion-close-circled"></i>
         Error communicating with server - don't worry, we'll sort it out later</p>
     </div>

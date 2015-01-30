@@ -20,7 +20,7 @@
         </span>
 
       </label>
-      <div ng-if="focused = focusedCheckpoint()">
+      <div ng-show="focused = focusedCheckpoint()">
         <strong>Focused Checkpoint</strong>
         <label>Checkpoint name
           <input type="text" ng-model="focused.message">
@@ -29,12 +29,12 @@
           <input type="text" ng-model="focused.description">
         </label>
         <button class="button expand alert" 
-                ng-if="!focused.removed"
+                ng-show="!focused.removed"
                 ng-click="deleteFocused()">
           Remove {{ focused.message || "Unnamed CP"}}
         </button>
         <button class="button expand"
-                ng-if="focused.removed"
+                ng-show="focused.removed"
                 ng-click="replaceFocused()">
           Replace {{ focused.message || "Unnamed CP"}}
         </button>
