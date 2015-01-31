@@ -1,6 +1,15 @@
-@import '../../bower_components/foundation/scss/foundation';
 @import "mixins";
+@import "foundation_fixes";
+@import '../../bower_components/foundation/scss/foundation';
 
+a[href] {
+  color: $dark
+}
+
+.f-topbar-fixed {
+  padding-top: 0px !important;
+}
+      
 .app-cache-ui {
   padding-top: 3px;
   position: fixed;
@@ -50,22 +59,27 @@
 }
      
 .front-page-jumbotron {
+                        
   & , & h1 {
-    font-weight: 500;
-    color: white;
-    text-shadow: rgba(0,0,0,0.498) 1px 1px 0px;
+    color: black;
   }
 
   padding: 4em;
+  @media #{ $small-only } {
+    padding-top: 1.5em;
+  }
 
+  h1 {
+    padding-bottom: 1.5em;
+  }
   h1 > .name {
     display: inline-block;
     position: relative;
     .beta {
       display: block;
       position: absolute;
-      right: -45px;
-      top: -20px;
+      right: -25px;
+      top: 20px;
       background-color: rgba(225,200,30,0.7);
       font-weight: 450;
       font-size: 0.5em;
@@ -115,7 +129,7 @@
   opacity: 0;
 }
 
-@media #{ $small-only } {
+//@media #{ $small-only } {
   body > div.ng-scope {
     height: 100%;
     & > div.off-canvas-wrap {
@@ -125,7 +139,7 @@
       }
     }
   }
-    }
+//    }
 
 .off-canvas-wrap > .inner-wrap > .fixed {
   // z-index of map controls is 1000

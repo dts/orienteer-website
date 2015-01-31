@@ -1,3 +1,15 @@
+// colors:
+$primary-color:                   #f3661f;
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+
 $topbar_height: 45px;
 
 @mixin rounded($radius: 0.5em) {
@@ -24,9 +36,10 @@ $topbar_height: 45px;
   // For some reason the animation here is a huge fail:
   -webkit-transition-property: -webkit-transform;
   -webkit-transition-duration: 400ms;
-
+  -webkit-transform: translate3d(0px,0px,0px);
+  
   .leaflet-control-container {
-    -webkit-transform: translate3d(0px,0px,0);
+    -webkit-transform: translate(0,0);
   }
   
   &.right-visible {
@@ -37,7 +50,7 @@ $topbar_height: 45px;
   position: fixed;
   top: $topbar_height;
   left: 0px;
-  bottom: 0px;
+  bottom: 0px; 
 
   .show-right , .show-left {
     -webkit-transform: translate3d(0px,0px,0);
@@ -105,6 +118,8 @@ $default_split_view_left_width: 300px;
   }
 }
 
+
+
 @mixin split_view_right($left_width: $default_split_view_left_width) {
   position: absolute;
   top: 0px;
@@ -127,14 +142,3 @@ $default_split_view_left_width: 300px;
   -webkit-overflow-scrolling: touch;
 }
 
-// colors:
-
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
