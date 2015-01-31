@@ -9,7 +9,7 @@
     <passport>
       <div class="checkpoints">
         <div class="row" ng-repeat="(cpIndex,cp) in checkpoints" ng-if="cpIndex % 2 == 0">
-          <checkpoint ng-repeat="elIndex in [0,1]" ng-class="cp_class(checkpoints[cpIndex+elIndex])" >
+          <checkpoint ng-repeat="elIndex in [0,1]" ng-if="elIndex+cpIndex < checkpoints.length" ng-class="cp_class(checkpoints[cpIndex+elIndex])" >
             <i class="ion-ios7-checkmark-outline" ng-show="checkpoints[cpIndex+elIndex].visited"></i>
             <i class="ion-ios7-circle-outline" ng-show="!checkpoints[cpIndex+elIndex].visited"></i>
             <p>
