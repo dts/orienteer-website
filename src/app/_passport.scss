@@ -1,11 +1,6 @@
 .checkpoints
 {
   padding-top: 1em;
-  @media #{ $medium-up }
-  {
-    padding-top: 4em;
-  }
-
   text-align: center;
 
   overflow: none;
@@ -16,20 +11,27 @@
       
 }
 
+passport .row {
+  overflow: hidden;
+}
+      
 checkpoint {
+    
   text-align: left;
   padding-left: 35px;
   position: relative;
-  display: inline-block;
   float: center;
+  display: inline-block;
+
   overflow: hidden;
   background-color: $stable;
-  height: 45px;
-  overflow: hidden;
+  height: 100%;
+
   border: $dark 1px solid;
   
   width: 48%;
-  margin: 0px 2px;
+  margin: 2px 2px;
+             
   @media #{ $medium-up } {
     width: 90%;
   }
@@ -40,8 +42,8 @@ checkpoint {
   }
       
   p {
-    padding-top: 0.7em;
-    line-height: 100%;
+    float: left;
+//    line-height: 100%;
   }
 }
 

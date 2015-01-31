@@ -8,14 +8,16 @@
   <div class="controls">
     <passport>
       <div class="checkpoints">
-        <checkpoint ng-repeat="cp in checkpoints" ng-class="cp_class(cp)" >
-          <i class="ion-ios7-checkmark-outline" ng-show="cp.visited"></i>
-          <i class="ion-ios7-circle-outline" ng-show="!cp.visited"></i>
-          <p>
-            <span class="name">{{ cp.name }}</span>
-            <span class="description">{{ cp.description }}</span>
-          </p>
-        </checkpoint>
+        <div class="row" ng-repeat="(cpIndex,cp) in checkpoints" ng-if="cpIndex % 2 == 0">
+          <checkpoint ng-repeat="elIndex in [0,1]" ng-class="cp_class(checkpoints[cpIndex+elIndex])" >
+            <i class="ion-ios7-checkmark-outline" ng-show="checkpoints[cpIndex+elIndex].visited"></i>
+            <i class="ion-ios7-circle-outline" ng-show="!checkpoints[cpIndex+elIndex].visited"></i>
+            <p>
+              <span class="name">{{ checkpoints[cpIndex+elIndex].name }}</span>
+              <span class="description">{{ checkpoints[cpIndex+elIndex].description }}</span>
+            </p>
+          </checkpoint>
+        </div>
       </div>
     </passport>
 

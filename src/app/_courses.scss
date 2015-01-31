@@ -65,29 +65,27 @@ $run-controls-width: 375px;
   {
     @include scrolls-y;
     @include split_view_left($run-controls-width);
+    @media #{ $medium-up } {
+      top: 51px;
+    }
   }
+
   .map {
     @include split_view_right($run-controls-width);
   }
-    
 }
-
-.run-container {
- position: relative;
- }
-
 .run-top-controls {
-
-  top: 0px;
+  position: fixed;                    
+  top: $topbar-height+$topbar-margin-bottom;
   left: 0px;
+      
   @media #{ $small-only }
   {
-    position: absolute;
-  right: 0px;
+    right: 0px;
   }
+  
   @media #{ $medium-up }
   {
-  
     width: $run-controls-width;
   }
 }
