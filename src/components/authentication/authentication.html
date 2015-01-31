@@ -20,11 +20,11 @@
     </div>
     </div> -->
   <label>Email
-    <input ng-class="dataErrors.username?'error':''" type="email" placeholder="whodunit@nowhere.com" required ng-model="data.username">
+    <input ng-class="dataErrors.username?'error':''" type="email" placeholder="" required ng-model="data.username">
     </label>
     <small class="error" ng-show="dataErrors.username">{{ dataErrors.username }}</small>
     <label>Password
-      <input ng-class="dataErrors.password?'error':''" type="password" placeholder="idunno24" ng-model="data.password">
+      <input ng-class="dataErrors.password?'error':''" type="password" placeholder="" ng-model="data.password">
     </label>
     <small class="error" ng-show="dataErrors.password">{{ dataErrors.password }}</small>
     <div ng-show="signingUp" class="fade">
